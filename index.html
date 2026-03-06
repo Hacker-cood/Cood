@@ -9,7 +9,6 @@
         :root {
             --neon-purple: #9d00ff;
             --neon-blue: #00f3ff;
-            /* 🔴 لون أخضر غامق قوي للتوهج */
             --neon-green-dark: #006400; 
             --bg-dark: #0b001a;
         }
@@ -29,61 +28,8 @@
             align-items: center;
             padding: 20px; 
             color: #fff;
-            overflow-x: hidden; /* يمنع ظهور شريط تمرير أفقي بسبب الشعارات الخارجة */
+            overflow-x: hidden; 
             position: relative;
-        }
-
-        /* --- حاوية الشعارات العائمة (خلف المستطيل) --- */
-        .bg-float-icons {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* 🔴 نقلناها للطبقة الخلفية ورا المستطيل */
-            pointer-events: none; 
-        }
-
-        .bg-float-icon {
-            position: absolute;
-            opacity: 0.9; 
-            /* 🔴 تكبير شكل الشعارات */
-            width: 140px; 
-        }
-
-        /* شعار أفتر إفكتس (فوق يمين، نصفه ظاهر، توهج بنفسجي قوي) */
-        .bg-icon-right {
-            /* 🔴 قيم سالبة لإخفاء نصف الشعار برا الشاشة */
-            top: -40px; 
-            right: -60px; 
-            border-radius: 18px; /* تنعيم الحواف */
-            border: none; /* 🔴 التأكد من حذف أي حواف وردية */
-            /* 🔴 توهج بنفسجي قوي جداً ومزدوج */
-            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
-            animation: floatRightTop 6s ease-in-out infinite;
-        }
-
-        /* شعار لايت موشن (فوق يسار، نصفه ظاهر، توهج أخضر غامق قوي) */
-        .bg-icon-left {
-            /* 🔴 قيم سالبة لإخفاء نصف الشعار برا الشاشة */
-            top: -40px; 
-            left: -60px; 
-            border-radius: 50%; /* تنعيم الحواف ليكون دائري */
-            border: none; /* 🔴 التأكد من حذف أي حواف وردية */
-            /* 🔴 توهج أخضر غامق قوي جداً ومزدوج */
-            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
-            animation: floatLeftTop 7s ease-in-out infinite reverse; 
-        }
-
-        /* حركة طفو هادية ومناسبة للزوايا العليا */
-        @keyframes floatRightTop {
-            0%, 100% { transform: translateY(0) rotate(5deg); }
-            50% { transform: translateY(-10px) rotate(10deg); }
-        }
-
-        @keyframes floatLeftTop {
-            0%, 100% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-10px) rotate(-15deg); }
         }
 
         /* --- الحاوية الرئيسية --- */
@@ -95,14 +41,51 @@
             border-radius: 25px;
             padding: 30px 20px; 
             width: 100%;
-            /* 🔴 تضييق المستطيل شوي عشان يعطي مساحة للشعارات تبرز من وراه */
             max-width: 420px; 
             text-align: center;
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.15);
-            position: relative;
-            z-index: 1; /* 🔴 رفعنا الطبقة لتكون فوق الشعارات */
+            position: relative; /* 🔴 مهم عشان نقدر نثبت الشعارات بناءً على زوايا هذا المستطيل */
+            z-index: 1; 
             margin-top: 50px; 
             margin-bottom: 20px; 
+        }
+
+        /* --- تنسيق الشعارات العائمة (الآن صارت مربوطة بالمستطيل) --- */
+        /* شعار أفتر إفكتس (زاوية المستطيل اليمين من فوق) */
+        .bg-icon-right {
+            position: absolute;
+            top: -45px; /* نرفعه فوق حافة المستطيل */
+            right: -45px; /* نطلعه يمين حافة المستطيل */
+            width: 130px; 
+            z-index: -1; /* 🔴 هذا الأمر يخليه يرجع ورا خلفية المستطيل */
+            border-radius: 18px; 
+            border: none;
+            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
+            animation: floatRightTop 6s ease-in-out infinite;
+        }
+
+        /* شعار لايت موشن (زاوية المستطيل اليسار من فوق) */
+        .bg-icon-left {
+            position: absolute;
+            top: -45px; /* نرفعه فوق حافة المستطيل */
+            left: -45px; /* نطلعه يسار حافة المستطيل */
+            width: 130px; 
+            z-index: -1; /* 🔴 هذا الأمر يخليه يرجع ورا خلفية المستطيل */
+            border-radius: 50%; 
+            border: none;
+            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
+            animation: floatLeftTop 7s ease-in-out infinite reverse; 
+        }
+
+        /* حركات الطفو */
+        @keyframes floatRightTop {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+        }
+
+        @keyframes floatLeftTop {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-10px) rotate(-15deg); }
         }
 
         /* --- اللوقو الشخصي --- */
@@ -194,12 +177,11 @@
 </head>
 <body>
 
-    <div class="bg-float-icons">
-        <img src="am.png" alt="Alight Motion" class="bg-float-icon bg-icon-left">
-        <img src="ae.png" alt="After Effects" class="bg-float-icon bg-icon-right">
-    </div>
-
     <div class="container">
+        
+        <img src="am.png" alt="Alight Motion" class="bg-icon-left">
+        <img src="ae.png" alt="After Effects" class="bg-icon-right">
+
         <div class="logo-container">
             <img src="lg.png" alt="VORTX Logo" class="logo">
         </div>
@@ -218,3 +200,4 @@
 
 </body>
 </html>
+
