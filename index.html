@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VORTX | روابطي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-purple: #9d00ff;
@@ -20,7 +20,6 @@
         }
 
         body {
-            /* رجعنا الخلفية الكحلية الداكنة النظيفة بدون أي بقع ألوان */
             background-color: var(--bg-dark);
             min-height: 100vh;
             display: flex;
@@ -32,7 +31,7 @@
             position: relative;
         }
 
-        /* --- حاوية لعناصر الخلفية العائمة --- */
+        /* --- حاوية الشعارات العائمة --- */
         .bg-float-icons {
             position: absolute;
             top: 0;
@@ -44,24 +43,26 @@
 
         .bg-float-icon {
             position: absolute;
-            opacity: 0.6; 
+            opacity: 0.8; /* رفعنا الوضوح شوي */
         }
 
-        /* شعار أفتر إفكتس */
+        /* شعار أفتر إفكتس (تم سحبه للداخل وإضافة توهج قوي) */
         .bg-icon-right {
-            top: 10%; 
-            right: 5%; 
-            width: 140px;
-            filter: drop-shadow(0 0 25px rgba(157, 0, 255, 0.4));
+            top: 15%; 
+            right: 8%; /* سحب للداخل عشان ما ينقص */
+            width: 130px;
+            /* توهج بنفسجي مزدوج وقوي */
+            filter: drop-shadow(0 0 20px var(--neon-purple)) drop-shadow(0 0 40px var(--neon-purple));
             animation: floatAE 6s ease-in-out infinite;
         }
 
-        /* شعار لايت موشن (تم تكبيره جداً وسحبه للداخل) */
+        /* شعار لايت موشن (تم سحبه للداخل وإضافة توهج قوي) */
         .bg-icon-left {
-            bottom: 15%; 
-            left: 10%; /* سحبناه للداخل عشان يوضح */
-            width: 170px; /* حجم كبير جداً */
-            filter: drop-shadow(0 0 25px rgba(0, 243, 255, 0.4));
+            bottom: 20%; 
+            left: 8%; /* سحب للداخل عشان ما ينقص */
+            width: 130px;
+            /* توهج أزرق مزدوج وقوي */
+            filter: drop-shadow(0 0 20px var(--neon-blue)) drop-shadow(0 0 40px var(--neon-blue));
             animation: floatAM 7s ease-in-out infinite;
         }
 
@@ -75,7 +76,7 @@
             50% { transform: translateY(-20px) rotate(-25deg); }
         }
 
-        /* --- الحاوية الرئيسية (نظيفة وفخمة بدون الوان تخرب) --- */
+        /* --- الحاوية الرئيسية --- */
         .container {
             background: rgba(20, 5, 35, 0.7);
             backdrop-filter: blur(15px);
@@ -91,15 +92,14 @@
             z-index: 1; 
         }
 
-        /* --- اللوقو الشخصي مع التوهج البنفسجي القوي --- */
+        /* --- اللوقو الشخصي --- */
         .logo-container {
             width: 160px; 
             height: 160px;
             margin: 0 auto 20px;
             border-radius: 50%;
             padding: 4px;
-            background: var(--neon-purple); /* لون الإطار */
-            /* هذا السطر يسوي التوهج البنفسجي الفخم حول اللوقو */
+            background: var(--neon-purple); 
             box-shadow: 0 0 25px var(--neon-purple), 0 0 50px var(--neon-purple); 
             position: relative;
         }
@@ -109,17 +109,19 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover; 
-            border: 3px solid #0b001a; /* يفصل بين اللوقو والتوهج */
+            border: 3px solid #0b001a; 
             background-color: #0b001a;
         }
 
+        /* --- اسم الحساب (تم تغيير الخط وإضافة التوهج) --- */
         h1 {
-            font-size: 32px;
+            font-family: 'Orbitron', sans-serif; /* الخط الإنجليزي الجديد */
+            font-size: 38px;
             font-weight: 900;
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px var(--neon-purple);
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple); /* توهج الاسم */
         }
 
         p.bio {
