@@ -11,6 +11,11 @@
             --neon-blue: #00f3ff;
             --neon-green-dark: #004d00;
             --bg-dark: #05000a;
+            
+            /* Robot Colors */
+            --robot-color: #9d00ff;
+            --robot-red: #ff003c;
+            --robot-size: 45px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,84 +29,67 @@
             font-family: 'Tajawal', sans-serif;
         }
 
-        /* --- المطر في الخلفية --- */
+        /* --- 1. Background Effects --- */
         #rainCanvas {
-            position: fixed;
-            top: 0; left: 0;
+            position: fixed; top: 0; left: 0;
             width: 100vw; height: 100vh;
-            z-index: 1; 
-            pointer-events: none;
+            z-index: 1; pointer-events: none;
         }
 
-        /* --- الشعارات بالزوايا --- */
+        .lightning {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(200, 0, 255, 0.15); opacity: 0;
+            pointer-events: none; z-index: 9998; transition: opacity 0.1s;
+        }
+
+        /* --- 2. Corner Icons --- */
         .bg-icon {
-            position: absolute;
-            z-index: 150; 
-            width: 120px;
-            pointer-events: none;
+            position: absolute; z-index: 150; 
+            width: 120px; pointer-events: none;
         }
-
         .bg-ae {
             top: 20px; right: 20px;
             filter: drop-shadow(0 0 25px var(--neon-purple));
             animation: float 6s infinite;
         }
-
         .bg-am {
-            bottom: 20px; left: 20px;
-            border-radius: 50%;
+            bottom: 20px; left: 20px; border-radius: 50%;
             filter: drop-shadow(0 0 25px var(--neon-green-dark));
             animation: float 7s infinite reverse;
         }
-
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* --- المستطيل الزجاجي (تمت زيادة الشفافية) --- */
+        /* --- 3. Main Glass Container --- */
         .container {
-            /* تقليل الألوان والضباب لرؤية الخلفية بوضوح */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(15, 5, 25, 0.2) 100%);
             backdrop-filter: blur(8px) saturate(120%);
             -webkit-backdrop-filter: blur(8px) saturate(120%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 50px 30px;
-            width: 100%; max-width: 440px;
-            text-align: center;
-            position: relative;
-            z-index: 100;
+            border-radius: 30px; padding: 50px 30px;
+            width: 100%; max-width: 440px; text-align: center;
+            position: relative; z-index: 100;
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
-            overflow: hidden; /* ضروري عشان الخطوط المتحركة ما تطلع برا الحواف الدائرية */
+            overflow: hidden;
         }
 
-        /* --- كود الخطوط المتصادمة داخل المستطيل --- */
         #innerBouncingCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0; /* خلف المحتوى الداخلي لكن داخل المستطيل */
-            pointer-events: none;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: 0; pointer-events: none;
         }
 
-        /* رفع المحتوى ليكون فوق الخطوط المتصادمة */
         .logo-container, .title-img, .tagline, .links-wrapper, .visitor-badge {
-            position: relative;
-            z-index: 10;
+            position: relative; z-index: 10;
         }
 
-        /* --- اللوجو وتأثير Glitch --- */
+        /* --- 4. Logo & Glitch --- */
         .logo-container {
             width: 140px; height: 140px; margin: 0 auto 15px;
-            border-radius: 50%; padding: 4px;
-            background: var(--neon-purple);
+            border-radius: 50%; padding: 4px; background: var(--neon-purple);
             box-shadow: 0 0 25px var(--neon-purple);
         }
-
         .logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #05000a; }
 
-        .title-img {
-            width: 85%; max-width: 250px; margin: 15px auto 5px; display: block;
-        }
-
+        .title-img { width: 85%; max-width: 250px; margin: 15px auto 5px; display: block; }
         .glitch { animation: glitch 5s infinite; }
         @keyframes glitch {
             0%, 92%, 100% { filter: none; transform: translate(0); }
@@ -109,56 +97,97 @@
             96% { filter: contrast(2); transform: translate(-2px, 2px); }
         }
 
-        /* --- التاغ لاين (تم تغييره للبنفسجي الفاتح للقراءة) --- */
         .tagline {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px; 
-            color: #d866ff; /* بنفسجي فاتح عشان يوضح مع الخلفية الشفافة */
-            font-weight: 900; text-transform: uppercase;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(157, 0, 255, 0.3);
-            display: inline-block; padding-bottom: 5px;
-            text-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
+            font-family: 'Montserrat', sans-serif; font-size: 13px; color: #d866ff; 
+            font-weight: 900; text-transform: uppercase; margin-bottom: 30px;
+            border-bottom: 2px solid rgba(157, 0, 255, 0.3); display: inline-block; 
+            padding-bottom: 5px; text-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
         }
 
-        /* --- الأزرار --- */
+        /* --- 5. Buttons --- */
         .links-wrapper { display: flex; flex-direction: column; gap: 15px; }
-
         .link-btn {
             display: flex; align-items: center; justify-content: center;
-            text-decoration: none; color: #fff;
-            background: rgba(0, 0, 0, 0.5); /* تغميق الأزرار شوي عشان تبرز فوق الخطوط */
-            padding: 18px; border-radius: 15px;
-            font-size: 17px; font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            transition: all 0.3s ease;
+            text-decoration: none; color: #fff; background: rgba(0, 0, 0, 0.5);
+            padding: 18px; border-radius: 15px; font-size: 17px; font-weight: 700;
+            border: 1px solid rgba(157, 0, 255, 0.3); transition: all 0.3s ease;
         }
-
         .link-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #b400ff, 0 0 30px #7a00ff;
+            transform: scale(1.05); box-shadow: 0 0 15px #b400ff, 0 0 30px #7a00ff;
             border-color: var(--neon-purple);
         }
-
         .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: none; }
 
-        .visitor-badge {
-            margin-top: 30px; font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
-        }
+        .visitor-badge { margin-top: 30px; font-size: 12px; color: rgba(255, 255, 255, 0.6); }
         .visitor-badge span { color: #d866ff; font-weight: bold; }
 
+        /* --- 6. Cyber Robot CSS --- */
+        .robot-container {
+            position: fixed; bottom: 30px; right: 30px;
+            width: var(--robot-size); height: var(--robot-size);
+            z-index: 9999; touch-action: none; cursor: grab;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: robotIdle 3s ease-in-out infinite;
+        }
+        .robot-container:active { cursor: grabbing; }
+
+        .robot-body {
+            width: 100%; height: 80%;
+            background: linear-gradient(135deg, #2b004a, var(--robot-color));
+            border-radius: 12px 12px 8px 8px; position: relative;
+            box-shadow: 0 0 15px var(--robot-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .robot-eye {
+            width: 15px; height: 6px; background: #00f3ff; border-radius: 10px;
+            position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 10px #00f3ff; animation: blink 4s infinite;
+        }
+
+        .robot-propeller {
+            width: 60%; height: 4px; background: rgba(255, 255, 255, 0.8);
+            position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+            border-radius: 2px; animation: spinBlade 0.1s linear infinite;
+        }
+
+        .laser-beam {
+            position: absolute; top: 50%; left: 10px; height: 3px;
+            background: #00f3ff; box-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+            transform-origin: left center; opacity: 0; pointer-events: none;
+            transition: opacity 0.2s; z-index: -1;
+        }
+
+        @keyframes robotIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes spinBlade { 0% { transform: translateX(-50%) rotateY(0deg); } 100% { transform: translateX(-50%) rotateY(360deg); } }
+        @keyframes blink { 0%, 96%, 98% { height: 6px; } 97% { height: 1px; } }
+
+        .robot-spin { animation: quickSpin 0.5s ease-out !important; }
+        @keyframes quickSpin { 0% { transform: rotate(0deg) scale(1.2); } 100% { transform: rotate(360deg) scale(1); } }
+
+        .robot-shake { animation: shakeDust 0.6s ease-in-out !important; }
+        @keyframes shakeDust {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            20%, 60% { transform: translateX(-5px) rotate(-10deg); }
+            40%, 80% { transform: translateX(5px) rotate(10deg); }
+        }
+
+        .robot-red-theme .robot-body {
+            background: linear-gradient(135deg, #4a0000, var(--robot-red));
+            box-shadow: 0 0 20px var(--robot-red);
+        }
     </style>
 </head>
 <body>
 
     <canvas id="rainCanvas"></canvas>
+    <div class="lightning" id="flash"></div>
 
     <img src="ae.png" alt="AE" class="bg-icon bg-ae">
     <img src="am.png" alt="AM" class="bg-icon bg-am">
 
     <div class="container" id="mainContainer">
-        
         <canvas id="innerBouncingCanvas"></canvas>
 
         <div class="logo-container">
@@ -166,135 +195,186 @@
         </div>
 
         <img src="vr.png" alt="VORTX" class="title-img glitch">
-        
         <p class="tagline">After Effects Templates & Motion Design Tools</p>
 
         <div class="links-wrapper">
             <a href="#" class="link-btn store-btn">🛒 Online Store</a>
             <a href="#" class="link-btn">📱 TikTok</a>
-            <a href="#" class="link-btn">💬 Telegram</a>
+            <a href="#" class="link-btn" id="telegram-btn">💬 Telegram</a>
             <a href="#" class="link-btn">📸 Instagram</a>
         </div>
 
         <div class="visitor-badge">👁 Visitors: <span id="vCount">0</span></div>
     </div>
 
+    <div id="cyber-robot" class="robot-container">
+        <div class="robot-body"><div class="robot-eye"></div></div>
+        <div class="robot-propeller"></div>
+        <div id="robot-laser" class="laser-beam"></div>
+    </div>
+
     <script>
-        // 1. حركة المطر البطيئة في الخلفية
+        // --- 1. Rain Particles ---
         const rainCanvas = document.getElementById('rainCanvas');
         const ctxRain = rainCanvas.getContext('2d');
-        rainCanvas.width = window.innerWidth;
-        rainCanvas.height = window.innerHeight;
-
+        function resizeRain() { rainCanvas.width = window.innerWidth; rainCanvas.height = window.innerHeight; }
+        resizeRain();
         const rainParticles = [];
         for (let i = 0; i < 60; i++) {
             rainParticles.push({
-                x: Math.random() * rainCanvas.width,
-                y: Math.random() * rainCanvas.height,
-                size: Math.random() * 2,
-                speedY: Math.random() * 0.4 + 0.1,
-                opacity: Math.random() * 0.5 + 0.1
+                x: Math.random() * rainCanvas.width, y: Math.random() * rainCanvas.height,
+                size: Math.random() * 2, speedY: Math.random() * 0.4 + 0.1, opacity: Math.random() * 0.5 + 0.1
             });
         }
-
         function animateRain() {
             ctxRain.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
             rainParticles.forEach(p => {
-                ctxRain.fillStyle = `rgba(157, 0, 255, ${p.opacity})`;
-                ctxRain.beginPath();
-                ctxRain.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctxRain.fill();
-                p.y += p.speedY;
-                if (p.y > rainCanvas.height) {
-                    p.y = 0;
-                    p.x = Math.random() * rainCanvas.width;
-                }
+                ctxRain.fillStyle = `rgba(157, 0, 255, ${p.opacity})`; ctxRain.beginPath(); ctxRain.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctxRain.fill();
+                p.y += p.speedY; if (p.y > rainCanvas.height) { p.y = 0; p.x = Math.random() * rainCanvas.width; }
             });
             requestAnimationFrame(animateRain);
         }
         animateRain();
 
-        // 2. حركة الخطوط المتصادمة داخل المستطيل (Network Particles)
+        // --- 2. Inner Bouncing Lines ---
         const innerCanvas = document.getElementById('innerBouncingCanvas');
         const ctxInner = innerCanvas.getContext('2d');
         const container = document.getElementById('mainContainer');
         let innerW, innerH;
-
         function resizeInnerCanvas() {
-            innerW = container.offsetWidth;
-            innerH = container.offsetHeight;
-            innerCanvas.width = innerW;
-            innerCanvas.height = innerH;
+            innerW = container.offsetWidth; innerH = container.offsetHeight;
+            innerCanvas.width = innerW; innerCanvas.height = innerH;
         }
-
         const linesParticles = [];
-        // تقليل العدد إلى 20 عشان ما يسبب إزعاج بصري كبير
         for(let i=0; i<20; i++) {
             linesParticles.push({
-                x: Math.random() * 300,
-                y: Math.random() * 300,
-                vx: (Math.random() - 0.5) * 1.5, // سرعة الكرات
-                vy: (Math.random() - 0.5) * 1.5
+                x: Math.random() * 300, y: Math.random() * 300,
+                vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5
             });
         }
-
         function animateInnerLines() {
             ctxInner.clearRect(0, 0, innerW, innerH);
-
             for(let i=0; i<linesParticles.length; i++) {
-                let p = linesParticles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // التصادم مع الجدران الداخلية للمستطيل
+                let p = linesParticles[i]; p.x += p.vx; p.y += p.vy;
                 if(p.x <= 0 || p.x >= innerW) p.vx *= -1;
                 if(p.y <= 0 || p.y >= innerH) p.vy *= -1;
             }
-
-            // رسم الخطوط بين الكرات القريبة من بعضها
             ctxInner.lineWidth = 1;
             for(let i=0; i<linesParticles.length; i++) {
                 for(let j=i+1; j<linesParticles.length; j++) {
                     let dx = linesParticles[i].x - linesParticles[j].x;
                     let dy = linesParticles[i].y - linesParticles[j].y;
                     let dist = Math.sqrt(dx*dx + dy*dy);
-
-                    if(dist < 80) { // مسافة الربط بين الكرات
-                        ctxInner.beginPath();
-                        ctxInner.strokeStyle = `rgba(157, 0, 255, ${1 - dist/80})`;
+                    if(dist < 80) {
+                        ctxInner.beginPath(); ctxInner.strokeStyle = `rgba(157, 0, 255, ${1 - dist/80})`;
                         ctxInner.moveTo(linesParticles[i].x, linesParticles[i].y);
-                        ctxInner.lineTo(linesParticles[j].x, linesParticles[j].y);
-                        ctxInner.stroke();
+                        ctxInner.lineTo(linesParticles[j].x, linesParticles[j].y); ctxInner.stroke();
                     }
                 }
             }
             requestAnimationFrame(animateInnerLines);
         }
+        window.addEventListener('resize', () => { resizeRain(); resizeInnerCanvas(); });
+        setTimeout(() => { resizeInnerCanvas(); animateInnerLines(); }, 100);
 
-        // تشغيل وضبط مقاسات الكانفاس الداخلي
-        window.addEventListener('resize', () => {
-            rainCanvas.width = window.innerWidth;
-            rainCanvas.height = window.innerHeight;
-            resizeInnerCanvas();
-        });
-        
-        // نحتاج وقت بسيط جداً عشان المستطيل ياخذ مقاسه الطبيعي بعد التحميل
-        setTimeout(() => {
-            resizeInnerCanvas();
-            animateInnerLines();
-        }, 100);
-
-        // 3. عداد الزوار يبدأ من 1 بشكل حقيقي
+        // --- 3. Interaction (Visitor, Lightning, Parallax) ---
         let count = localStorage.getItem('vortx_real_count') || 0;
         count = parseInt(count) + 1;
         localStorage.setItem('vortx_real_count', count);
         document.getElementById('vCount').innerText = count.toLocaleString();
 
-        // 4. Parallax Background Movement
+        const flash = document.getElementById('flash');
+        document.addEventListener('click', () => {
+            flash.style.opacity = '1'; setTimeout(() => { flash.style.opacity = '0'; }, 100);
+        });
+
         document.addEventListener("mousemove", e => {
             const x = (window.innerWidth / 2 - e.clientX) / 60;
             const y = (window.innerHeight / 2 - e.clientY) / 60;
             document.body.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // --- 4. Cyber Robot Logic ---
+        const robot = document.getElementById('cyber-robot');
+        const laser = document.getElementById('robot-laser');
+        const telegramBtn = document.getElementById('telegram-btn');
+        let isDragging = false;
+
+        // Intro Mission
+        setTimeout(() => {
+            if(!telegramBtn) return;
+            robot.style.animation = 'none';
+            const targetRect = telegramBtn.getBoundingClientRect();
+            const robotRect = robot.getBoundingClientRect();
+            const moveX = targetRect.left - robotRect.left - 60; 
+            const moveY = targetRect.top - robotRect.top;
+            
+            robot.style.transition = 'transform 1.5s ease-in-out';
+            robot.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            
+            setTimeout(() => {
+                const dx = targetRect.left - (robotRect.left + moveX);
+                const dy = (targetRect.top + targetRect.height/2) - (robotRect.top + moveY + robotRect.height/2);
+                const distance = Math.sqrt(dx*dx + dy*dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                laser.style.width = `${distance}px`;
+                laser.style.transform = `rotate(${angle}deg)`;
+                laser.style.opacity = '1';
+                
+                setTimeout(() => {
+                    laser.style.opacity = '0';
+                    robot.style.transform = `translate(0px, 0px)`;
+                    setTimeout(() => {
+                        robot.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        robot.style.animation = 'robotIdle 3s ease-in-out infinite';
+                    }, 1500);
+                }, 2000); 
+            }, 1500); 
+        }, 1000);
+
+        // Robot Touch/Drag Interaction
+        let startX, startY, initialX, initialY;
+
+        robot.addEventListener('touchstart', (e) => {
+            if(isDragging) return;
+            // Tap interaction
+            robot.classList.remove('robot-shake');
+            robot.classList.add('robot-spin', 'robot-red-theme');
+            setTimeout(() => { robot.classList.remove('robot-spin', 'robot-red-theme'); }, 500);
+            
+            // Setup for drag
+            const touch = e.touches[0];
+            startX = touch.clientX; startY = touch.clientY;
+            const style = window.getComputedStyle(robot);
+            const matrix = new WebKitCSSMatrix(style.transform);
+            initialX = matrix.m41; initialY = matrix.m42;
+            
+            robot.style.transition = 'none';
+            robot.style.animation = 'none';
+        });
+
+        robot.addEventListener('touchmove', (e) => {
+            isDragging = true; e.preventDefault();
+            const touch = e.touches[0];
+            const currentX = touch.clientX - startX + initialX;
+            const currentY = touch.clientY - startY + initialY;
+            robot.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }, { passive: false });
+
+        robot.addEventListener('touchend', () => {
+            if(isDragging) {
+                robot.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                robot.style.transform = `translate(0px, 0px)`;
+                setTimeout(() => {
+                    robot.classList.add('robot-shake');
+                    setTimeout(() => {
+                        robot.classList.remove('robot-shake');
+                        robot.style.animation = 'robotIdle 3s ease-in-out infinite';
+                    }, 600);
+                }, 600);
+                isDragging = false;
+            }
         });
     </script>
 </body>
