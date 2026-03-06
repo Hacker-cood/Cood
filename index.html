@@ -24,16 +24,16 @@
             font-family: 'Tajawal', sans-serif;
         }
 
-        /* --- المطر الخفيف في الخلفية --- */
+        /* --- المطر في الخلفية --- */
         #rainCanvas {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            z-index: 1; /* ورا المستطيل */
+            z-index: 1; 
             pointer-events: none;
         }
 
-        /* --- الشعارات (فوق المستطيل مباشرة) --- */
+        /* --- الشعارات بالزوايا --- */
         .bg-icon {
             position: absolute;
             z-index: 150; 
@@ -56,21 +56,36 @@
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* --- المستطيل الزجاجي العاكس (المراية) --- */
+        /* --- المستطيل الزجاجي (تمت زيادة الشفافية) --- */
         .container {
-            /* تدرج شفاف يعطي لمعة الزجاج من فوق وظلام من تحت */
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 5, 25, 0.6) 100%);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            /* تقليل الألوان والضباب لرؤية الخلفية بوضوح */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(15, 5, 25, 0.2) 100%);
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 30px;
             padding: 50px 30px;
             width: 100%; max-width: 440px;
             text-align: center;
             position: relative;
             z-index: 100;
-            /* انعكاس داخلي (inset) يعطي واقعية للمراية */
-            box-shadow: 0 0 40px rgba(157, 0, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
+            overflow: hidden; /* ضروري عشان الخطوط المتحركة ما تطلع برا الحواف الدائرية */
+        }
+
+        /* --- كود الخطوط المتصادمة داخل المستطيل --- */
+        #innerBouncingCanvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; /* خلف المحتوى الداخلي لكن داخل المستطيل */
+            pointer-events: none;
+        }
+
+        /* رفع المحتوى ليكون فوق الخطوط المتصادمة */
+        .logo-container, .title-img, .tagline, .links-wrapper, .visitor-badge {
+            position: relative;
+            z-index: 10;
         }
 
         /* --- اللوجو وتأثير Glitch --- */
@@ -94,13 +109,16 @@
             96% { filter: contrast(2); transform: translate(-2px, 2px); }
         }
 
+        /* --- التاغ لاين (تم تغييره للبنفسجي الفاتح للقراءة) --- */
         .tagline {
             font-family: 'Montserrat', sans-serif;
-            font-size: 13px; color: var(--neon-blue);
+            font-size: 13px; 
+            color: #d866ff; /* بنفسجي فاتح عشان يوضح مع الخلفية الشفافة */
             font-weight: 900; text-transform: uppercase;
             margin-bottom: 30px;
             border-bottom: 2px solid rgba(157, 0, 255, 0.3);
             display: inline-block; padding-bottom: 5px;
+            text-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
         }
 
         /* --- الأزرار --- */
@@ -109,26 +127,26 @@
         .link-btn {
             display: flex; align-items: center; justify-content: center;
             text-decoration: none; color: #fff;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.5); /* تغميق الأزرار شوي عشان تبرز فوق الخطوط */
             padding: 18px; border-radius: 15px;
             font-size: 17px; font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.2);
+            border: 1px solid rgba(157, 0, 255, 0.3);
             transition: all 0.3s ease;
         }
 
         .link-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px #b400ff, 0 0 30px #7a00ff;
-            border-color: var(--neon-blue);
+            border-color: var(--neon-purple);
         }
 
         .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: none; }
 
         .visitor-badge {
             margin-top: 30px; font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
         }
-        .visitor-badge span { color: var(--neon-blue); font-weight: bold; }
+        .visitor-badge span { color: #d866ff; font-weight: bold; }
 
     </style>
 </head>
@@ -139,7 +157,10 @@
     <img src="ae.png" alt="AE" class="bg-icon bg-ae">
     <img src="am.png" alt="AM" class="bg-icon bg-am">
 
-    <div class="container">
+    <div class="container" id="mainContainer">
+        
+        <canvas id="innerBouncingCanvas"></canvas>
+
         <div class="logo-container">
             <img src="lg.png" alt="Avatar" class="logo">
         </div>
@@ -155,34 +176,34 @@
             <a href="#" class="link-btn">📸 Instagram</a>
         </div>
 
-        <div class="visitor-badge">👁 Visitors: <span id="vCount">1500</span></div>
+        <div class="visitor-badge">👁 Visitors: <span id="vCount">0</span></div>
     </div>
 
     <script>
-        // 1. حركة المطر البطيئة
+        // 1. حركة المطر البطيئة في الخلفية
         const rainCanvas = document.getElementById('rainCanvas');
-        const ctx = rainCanvas.getContext('2d');
+        const ctxRain = rainCanvas.getContext('2d');
         rainCanvas.width = window.innerWidth;
         rainCanvas.height = window.innerHeight;
 
-        const particles = [];
+        const rainParticles = [];
         for (let i = 0; i < 60; i++) {
-            particles.push({
+            rainParticles.push({
                 x: Math.random() * rainCanvas.width,
                 y: Math.random() * rainCanvas.height,
                 size: Math.random() * 2,
-                speedY: Math.random() * 0.4 + 0.1, // حركة بطيئة جداً
+                speedY: Math.random() * 0.4 + 0.1,
                 opacity: Math.random() * 0.5 + 0.1
             });
         }
 
         function animateRain() {
-            ctx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
-            particles.forEach(p => {
-                ctx.fillStyle = `rgba(157, 0, 255, ${p.opacity})`;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+            ctxRain.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
+            rainParticles.forEach(p => {
+                ctxRain.fillStyle = `rgba(157, 0, 255, ${p.opacity})`;
+                ctxRain.beginPath();
+                ctxRain.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctxRain.fill();
                 p.y += p.speedY;
                 if (p.y > rainCanvas.height) {
                     p.y = 0;
@@ -193,23 +214,88 @@
         }
         animateRain();
 
+        // 2. حركة الخطوط المتصادمة داخل المستطيل (Network Particles)
+        const innerCanvas = document.getElementById('innerBouncingCanvas');
+        const ctxInner = innerCanvas.getContext('2d');
+        const container = document.getElementById('mainContainer');
+        let innerW, innerH;
+
+        function resizeInnerCanvas() {
+            innerW = container.offsetWidth;
+            innerH = container.offsetHeight;
+            innerCanvas.width = innerW;
+            innerCanvas.height = innerH;
+        }
+
+        const linesParticles = [];
+        // تقليل العدد إلى 20 عشان ما يسبب إزعاج بصري كبير
+        for(let i=0; i<20; i++) {
+            linesParticles.push({
+                x: Math.random() * 300,
+                y: Math.random() * 300,
+                vx: (Math.random() - 0.5) * 1.5, // سرعة الكرات
+                vy: (Math.random() - 0.5) * 1.5
+            });
+        }
+
+        function animateInnerLines() {
+            ctxInner.clearRect(0, 0, innerW, innerH);
+
+            for(let i=0; i<linesParticles.length; i++) {
+                let p = linesParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // التصادم مع الجدران الداخلية للمستطيل
+                if(p.x <= 0 || p.x >= innerW) p.vx *= -1;
+                if(p.y <= 0 || p.y >= innerH) p.vy *= -1;
+            }
+
+            // رسم الخطوط بين الكرات القريبة من بعضها
+            ctxInner.lineWidth = 1;
+            for(let i=0; i<linesParticles.length; i++) {
+                for(let j=i+1; j<linesParticles.length; j++) {
+                    let dx = linesParticles[i].x - linesParticles[j].x;
+                    let dy = linesParticles[i].y - linesParticles[j].y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if(dist < 80) { // مسافة الربط بين الكرات
+                        ctxInner.beginPath();
+                        ctxInner.strokeStyle = `rgba(157, 0, 255, ${1 - dist/80})`;
+                        ctxInner.moveTo(linesParticles[i].x, linesParticles[i].y);
+                        ctxInner.lineTo(linesParticles[j].x, linesParticles[j].y);
+                        ctxInner.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateInnerLines);
+        }
+
+        // تشغيل وضبط مقاسات الكانفاس الداخلي
         window.addEventListener('resize', () => {
             rainCanvas.width = window.innerWidth;
             rainCanvas.height = window.innerHeight;
+            resizeInnerCanvas();
         });
+        
+        // نحتاج وقت بسيط جداً عشان المستطيل ياخذ مقاسه الطبيعي بعد التحميل
+        setTimeout(() => {
+            resizeInnerCanvas();
+            animateInnerLines();
+        }, 100);
 
-        // 2. حركة Parallax للموقع كامل مع الماوس
+        // 3. عداد الزوار يبدأ من 1 بشكل حقيقي
+        let count = localStorage.getItem('vortx_real_count') || 0;
+        count = parseInt(count) + 1;
+        localStorage.setItem('vortx_real_count', count);
+        document.getElementById('vCount').innerText = count.toLocaleString();
+
+        // 4. Parallax Background Movement
         document.addEventListener("mousemove", e => {
             const x = (window.innerWidth / 2 - e.clientX) / 60;
             const y = (window.innerHeight / 2 - e.clientY) / 60;
             document.body.style.transform = `translate(${x}px, ${y}px)`;
         });
-
-        // 3. عداد الزوار
-        let count = localStorage.getItem('v_stable_v4') || 1500;
-        count = parseInt(count) + 1;
-        localStorage.setItem('v_stable_v4', count);
-        document.getElementById('vCount').innerText = count.toLocaleString();
     </script>
 </body>
 </html>
