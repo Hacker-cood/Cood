@@ -9,6 +9,7 @@
         :root {
             --neon-purple: #9d00ff;
             --neon-blue: #00f3ff;
+            --neon-green-dark: #006400; 
             --bg-dark: #0b001a;
         }
 
@@ -31,7 +32,68 @@
             position: relative;
         }
 
-        /* --- 1. Animated Particles Inside Card (Canvas) --- */
+        /* --- Entrance Animations --- */
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes btnFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cardPulse {
+            0% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.2); }
+            50% { box-shadow: 0 0 60px rgba(157, 0, 255, 0.4); }
+            100% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.2); }
+        }
+
+        /* --- Floating Icons (Back to the corners) --- */
+        .bg-icon {
+            position: absolute;
+            z-index: -2; /* Behind the glass */
+            width: 135px;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .bg-ae {
+            top: -45px;
+            right: -45px;
+            border-radius: 18px;
+            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
+            animation: floatAE 6s ease-in-out infinite;
+        }
+
+        .bg-am {
+            top: -45px;
+            left: -45px;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
+            animation: floatAM 7s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatAE { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
+        @keyframes floatAM { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-15px) rotate(-20deg); } }
+
+        /* --- Main Card --- */
+        .container {
+            background: rgba(20, 5, 35, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 25px;
+            padding: 45px 30px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.2);
+            opacity: 0;
+            animation: cardEntrance 0.8s ease-out forwards, cardPulse 4s infinite ease-in-out;
+        }
+
         #cardCanvas {
             position: absolute;
             top: 0;
@@ -42,43 +104,7 @@
             border-radius: 25px;
         }
 
-        /* --- 3. Entrance Animation --- */
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes btnFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 8. Optional Pulse Effect --- */
-        @keyframes cardPulse {
-            0% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.15); }
-            50% { box-shadow: 0 0 60px rgba(157, 0, 255, 0.3); }
-            100% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.15); }
-        }
-
-        /* --- 2. Main Card Container (Glow & Shadows) --- */
-        .container {
-            background: rgba(20, 5, 35, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            border-radius: 25px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            /* 2. Glow & Shadows */
-            box-shadow: 0 0 40px rgba(157, 0, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.05);
-            /* 3. Entrance */
-            opacity: 0;
-            animation: cardEntrance 0.8s ease-out forwards, cardPulse 4s infinite ease-in-out;
-        }
-
+        /* --- Profile & Content --- */
         .logo-container {
             width: 150px;
             height: 150px;
@@ -87,18 +113,13 @@
             padding: 4px;
             background: var(--neon-purple);
             box-shadow: 0 0 25px var(--neon-purple);
-            position: relative;
             opacity: 0;
             animation: btnFadeIn 0.5s ease-out forwards;
             animation-delay: 0.3s;
         }
 
-        .logo {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            border: 3px solid #0b001a;
-        }
+        .logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #0b001a; }
 
-        /* --- 5. Convert Text to English --- */
         .title-img {
             width: 85%;
             max-width: 260px;
@@ -110,22 +131,10 @@
             animation-delay: 0.5s;
         }
 
-        p.bio {
-            font-size: 15px;
-            color: #b3b3b3;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            opacity: 0;
-            animation: btnFadeIn 0.5s ease-out forwards;
-            animation-delay: 0.6s;
-        }
+        .bio { font-size: 15px; color: #b3b3b3; margin-bottom: 25px; opacity: 0; animation: btnFadeIn 0.5s ease-out forwards; animation-delay: 0.6s; }
 
-        /* --- 4. Button Hover Effects --- */
-        .links-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        /* --- Buttons --- */
+        .links-wrapper { display: flex; flex-direction: column; gap: 15px; }
 
         .link-btn {
             display: flex;
@@ -139,57 +148,41 @@
             font-size: 17px;
             font-weight: 700;
             border: 1px solid rgba(157, 0, 255, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(10px);
             animation: btnFadeIn 0.5s ease-out forwards;
         }
 
-        /* Staggered entrance */
         .link-btn:nth-child(1) { animation-delay: 0.7s; }
         .link-btn:nth-child(2) { animation-delay: 0.8s; }
         .link-btn:nth-child(3) { animation-delay: 0.9s; }
         .link-btn:nth-child(4) { animation-delay: 1.0s; }
 
         .link-btn:hover {
-            transform: scale(1.05); /* 4. Scale up */
+            transform: scale(1.05);
             background: rgba(157, 0, 255, 0.2);
             border-color: var(--neon-blue);
-            box-shadow: 0 0 25px var(--neon-purple); /* 4. Increase glow */
+            box-shadow: 0 0 25px var(--neon-purple);
         }
 
-        .store-btn {
-            background: linear-gradient(90deg, #4a00e0, #8e2de2);
-            border: 1px solid var(--neon-blue);
-        }
+        .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: 1px solid var(--neon-blue); }
 
-        /* --- 7. Copy Link Button --- */
         .copy-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: transparent;
             border: 1px dashed var(--neon-blue);
             font-size: 13px;
             padding: 8px;
-            margin-top: 10px;
+            margin-top: 15px;
             cursor: pointer;
             border-radius: 8px;
             color: var(--neon-blue);
-            transition: 0.3s;
             opacity: 0;
             animation: btnFadeIn 0.5s ease-out forwards;
             animation-delay: 1.1s;
         }
-        .copy-btn:hover { background: rgba(0, 243, 255, 0.1); }
 
-        /* --- 6. Visitor Counter --- */
-        .visitor-counter {
-            margin-top: 25px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            animation: btnFadeIn 0.5s ease-out forwards;
-            animation-delay: 1.2s;
-        }
+        .visitor-counter { margin-top: 25px; font-size: 14px; color: rgba(255, 255, 255, 0.5); opacity: 0; animation: btnFadeIn 0.5s ease-out forwards; animation-delay: 1.2s; }
         .visitor-counter span { color: var(--neon-blue); font-weight: bold; }
 
     </style>
@@ -197,6 +190,9 @@
 <body>
 
     <div class="container">
+        <img src="am.png" alt="Alight Motion" class="bg-icon bg-am">
+        <img src="ae.png" alt="After Effects" class="bg-icon bg-ae">
+        
         <canvas id="cardCanvas"></canvas>
 
         <div class="logo-container">
@@ -207,10 +203,10 @@
         <p class="bio">Content Creator | Edit & Motion Graphics</p>
 
         <div class="links-wrapper">
-            <a href="#" class="link-btn store-btn" title="Visit our official online store">🛒 Online Store</a>
-            <a href="https://tiktok.com/@your_user" class="link-btn" title="Follow me on TikTok">📱 TikTok</a>
-            <a href="#" class="link-btn" title="Subscribe to my YouTube channel">▶️ YouTube</a>
-            <a href="#" class="link-btn" title="Follow me on Instagram">📸 Instagram</a>
+            <a href="#" class="link-btn store-btn">🛒 Online Store</a>
+            <a href="https://tiktok.com/@vortx" id="tk-link" class="link-btn">📱 TikTok</a>
+            <a href="#" class="link-btn">▶️ YouTube</a>
+            <a href="#" class="link-btn">📸 Instagram</a>
         </div>
 
         <button class="copy-btn" onclick="copyLink()">📋 Copy TikTok Link</button>
@@ -221,71 +217,36 @@
     </div>
 
     <script>
-        // --- 6. Visitor Counter Logic ---
+        // Visitor Counter
         document.addEventListener("DOMContentLoaded", () => {
-            let visits = localStorage.getItem('vortx_visits') || 0;
+            let visits = localStorage.getItem('vortx_v_count') || 0;
             visits++;
-            localStorage.setItem('vortx_visits', visits);
+            localStorage.setItem('vortx_v_count', visits);
             document.getElementById('visitCount').innerText = visits;
         });
 
-        // --- 7. Copy Link Function ---
+        // Copy Link
         function copyLink() {
-            const tiktokLink = "https://tiktok.com/@your_user";
-            navigator.clipboard.writeText(tiktokLink).then(() => {
-                alert("TikTok link copied to clipboard!");
+            const link = document.getElementById('tk-link').href;
+            navigator.clipboard.writeText(link).then(() => {
+                alert("TikTok link copied!");
             });
         }
 
-        // --- 1. Lightweight Particles Background ---
+        // Particle Canvas
         const canvas = document.getElementById('cardCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function initCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
+        function init() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+        class P {
+            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.vy = Math.random()*0.5+0.2; this.o = Math.random()*0.5; }
+            u() { this.y -= this.vy; if (this.y < 0) this.y = canvas.height; }
+            d() { ctx.fillStyle = `rgba(157,0,255,${this.o})`; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fill(); }
         }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedY = Math.random() * 0.5 + 0.2;
-                this.opacity = Math.random() * 0.5;
-            }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(157, 0, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-
-        initCanvas();
-        createParticles();
-        animate();
-        window.addEventListener('resize', initCanvas);
+        function setup() { for(let i=0; i<30; i++) particles.push(new P()); }
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.u();p.d();}); requestAnimationFrame(anim); }
+        init(); setup(); anim();
+        window.onresize = init;
     </script>
 </body>
 </html>
