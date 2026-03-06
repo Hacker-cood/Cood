@@ -9,7 +9,6 @@
         :root {
             --neon-purple: #9d00ff;
             --neon-blue: #00f3ff;
-            --neon-green-dark: #006400; 
             --bg-dark: #0b001a;
         }
 
@@ -28,7 +27,7 @@
             align-items: center;
             padding: 40px 20px;
             color: #fff;
-            overflow-x: hidden;
+            overflow: hidden; /* منع السكرول عشان نحافظ على شكل الشعارات بالزوايا */
             position: relative;
         }
 
@@ -42,65 +41,54 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes cardPulse {
-            0% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.2); }
-            50% { box-shadow: 0 0 60px rgba(157, 0, 255, 0.4); }
-            100% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.2); }
-        }
-
-        /* --- Main Card Wrapper --- */
-        .main-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 440px;
-            z-index: 1;
-            opacity: 0;
-            animation: cardEntrance 0.8s ease-out forwards;
-        }
-
-        /* --- Floating Icons (Positioned behind the glass edges) --- */
+        /* --- Floating Icons (Diagonal Balance Strategy) --- */
         .bg-icon {
             position: absolute;
-            z-index: 0; /* Behind the glass container */
-            width: 135px;
-            opacity: 0.9;
+            z-index: 20; /* 🔴 رجعت فوق المستطيل */
             pointer-events: none;
+            opacity: 0.95;
         }
 
+        /* Primary Weight: After Effects (Top-Right) */
         .bg-ae {
-            top: -45px;
-            right: -45px;
+            top: 5%;
+            right: 5%;
+            width: 130px;
             border-radius: 18px;
-            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
+            filter: drop-shadow(0 0 30px var(--neon-purple));
             animation: floatAE 6s ease-in-out infinite;
         }
 
+        /* Symmetrical Counterweight: Alight Motion (Bottom-Left) */
         .bg-am {
-            top: -45px;
-            left: -45px;
+            bottom: 5%; /* 🔴 مكانه تحت يسار */
+            left: 5%;
+            width: 110px; /* 🔴 تم تصغيره بنسبة 15% للعمق الميداني */
             border-radius: 50%;
-            /* Neon green glow for Alight Motion */
-            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
-            animation: floatAM 7s ease-in-out infinite reverse;
+            /* Chromatic Integration: نعمنا الأخضر مع توهج بنفسجي خفيف */
+            filter: saturate(0.8) drop-shadow(0 0 20px var(--neon-purple));
+            animation: floatAM 7s ease-in-out infinite;
         }
 
-        @keyframes floatAE { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
-        @keyframes floatAM { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-15px) rotate(-20deg); } }
+        @keyframes floatAE { 0%, 100% { transform: translateY(0) rotate(15deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
+        @keyframes floatAM { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(15px) rotate(-15deg); } }
 
-        /* --- Glass Container --- */
+        /* --- Main Card Container --- */
         .container {
             background: rgba(20, 5, 35, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(157, 0, 255, 0.3);
             border-radius: 25px;
-            padding: 45px 30px;
+            padding: 40px 30px;
             width: 100%;
+            max-width: 440px;
             text-align: center;
             position: relative;
-            z-index: 10; /* Higher than floating icons */
+            z-index: 10;
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.2);
-            animation: cardPulse 4s infinite ease-in-out;
+            opacity: 0;
+            animation: cardEntrance 0.8s ease-out forwards;
         }
 
         #cardCanvas {
@@ -113,10 +101,10 @@
             border-radius: 25px;
         }
 
-        /* --- Profile --- */
+        /* --- Profile & Content --- */
         .logo-container {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             margin: 0 auto 15px;
             border-radius: 50%;
             padding: 4px;
@@ -131,7 +119,7 @@
 
         .title-img {
             width: 85%;
-            max-width: 260px;
+            max-width: 250px;
             margin: 5px auto 10px;
             display: block;
             filter: drop-shadow(0 0 15px rgba(157, 0, 255, 0.6));
@@ -143,7 +131,7 @@
         .bio { font-size: 15px; color: #b3b3b3; margin-bottom: 25px; opacity: 0; animation: btnFadeIn 0.5s ease-out forwards; animation-delay: 0.6s; }
 
         /* --- Buttons --- */
-        .links-wrapper { display: flex; flex-direction: column; gap: 15px; }
+        .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
 
         .link-btn {
             display: flex;
@@ -152,12 +140,12 @@
             text-decoration: none;
             color: #fff;
             background: rgba(0, 0, 0, 0.5);
-            padding: 16px 20px;
-            border-radius: 15px;
+            padding: 15px 20px;
+            border-radius: 12px;
             font-size: 17px;
             font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            transition: 0.3s ease;
             opacity: 0;
             transform: translateY(10px);
             animation: btnFadeIn 0.5s ease-out forwards;
@@ -172,89 +160,63 @@
             transform: scale(1.05);
             background: rgba(157, 0, 255, 0.2);
             border-color: var(--neon-blue);
-            box-shadow: 0 0 25px var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple);
         }
 
         .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: 1px solid var(--neon-blue); }
 
-        .copy-btn {
-            background: transparent;
-            border: 1px dashed var(--neon-blue);
-            font-size: 13px;
-            padding: 8px;
-            margin-top: 15px;
-            cursor: pointer;
-            border-radius: 8px;
-            color: var(--neon-blue);
-            opacity: 0;
-            animation: btnFadeIn 0.5s ease-out forwards;
-            animation-delay: 1.1s;
-        }
-
-        .visitor-counter { margin-top: 25px; font-size: 14px; color: rgba(255, 255, 255, 0.5); opacity: 0; animation: btnFadeIn 0.5s ease-out forwards; animation-delay: 1.2s; }
-        .visitor-counter span { color: var(--neon-blue); font-weight: bold; }
+        .visitor-counter { margin-top: 25px; font-size: 13px; color: rgba(255, 255, 255, 0.4); opacity: 0; animation: btnFadeIn 0.5s ease-out forwards; animation-delay: 1.2s; }
+        .visitor-counter span { color: var(--neon-blue); }
 
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <img src="am.png" alt="Alight Motion" class="bg-icon bg-am">
+    <div class="container">
         <img src="ae.png" alt="After Effects" class="bg-icon bg-ae">
+        <img src="am.png" alt="Alight Motion" class="bg-icon bg-am">
+        
+        <canvas id="cardCanvas"></canvas>
 
-        <div class="container">
-            <canvas id="cardCanvas"></canvas>
+        <div class="logo-container">
+            <img src="lg.png" alt="VORTX Logo" class="logo">
+        </div>
 
-            <div class="logo-container">
-                <img src="lg.png" alt="VORTX Logo" class="logo">
-            </div>
+        <img src="vr.png" alt="VORTX" class="title-img">
+        <p class="bio">Content Creator | Edit & Motion Graphics</p>
 
-            <img src="vr.png" alt="VORTX" class="title-img">
-            <p class="bio">Content Creator | Edit & Motion Graphics</p>
+        <div class="links-wrapper">
+            <a href="#" class="link-btn store-btn">🛒 Online Store</a>
+            <a href="#" class="link-btn">📱 TikTok</a>
+            <a href="#" class="link-btn">💬 Telegram</a>
+            <a href="#" class="link-btn">📸 Instagram</a>
+        </div>
 
-            <div class="links-wrapper">
-                <a href="#" class="link-btn store-btn">🛒 Online Store</a>
-                <a href="https://tiktok.com/@vortx" id="tk-link" class="link-btn">📱 TikTok</a>
-                <a href="#" class="link-btn">💬 Telegram</a>
-                <a href="#" class="link-btn">📸 Instagram</a>
-            </div>
-
-            <button class="copy-btn" onclick="copyLink()">📋 Copy TikTok Link</button>
-
-            <div class="visitor-counter">
-                👁 Visitors: <span id="visitCount">0</span>
-            </div>
+        <div class="visitor-counter">
+            👁 Visitors: <span id="visitCount">0</span>
         </div>
     </div>
 
     <script>
         // Visitor Counter
         document.addEventListener("DOMContentLoaded", () => {
-            let visits = localStorage.getItem('vortx_v_count') || 0;
+            let visits = localStorage.getItem('vortx_diag_count') || 0;
             visits++;
-            localStorage.setItem('vortx_v_count', visits);
+            localStorage.setItem('vortx_diag_count', visits);
             document.getElementById('visitCount').innerText = visits;
         });
 
-        // Copy Link
-        function copyLink() {
-            const link = document.getElementById('tk-link').href;
-            navigator.clipboard.writeText(link).then(() => {
-                alert("TikTok link copied!");
-            });
-        }
-
-        // Particle Canvas
+        // Particle Canvas Inside
         const canvas = document.getElementById('cardCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function init() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
         class P {
-            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.vy = Math.random()*0.5+0.2; this.o = Math.random()*0.5; }
+            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.vy = Math.random()*0.5+0.1; this.o = Math.random()*0.4; }
             u() { this.y -= this.vy; if (this.y < 0) this.y = canvas.height; }
             d() { ctx.fillStyle = `rgba(157,0,255,${this.o})`; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fill(); }
         }
-        function setup() { for(let i=0; i<30; i++) particles.push(new P()); }
+        function setup() { for(let i=0; i<25; i++) particles.push(new P()); }
         function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.u();p.d();}); requestAnimationFrame(anim); }
         init(); setup(); anim();
         window.onresize = init;
