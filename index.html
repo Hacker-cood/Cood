@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTX | Pro Hub</title>
+    <title>VORTX | Fixed Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,8 +13,8 @@
             --bg-dark: #05000a;
         }
 
-        /* --- Base Setup --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background-color: var(--bg-dark);
             min-height: 100vh;
@@ -22,56 +22,60 @@
             padding: 40px 20px; color: #fff;
             overflow: hidden; position: relative;
             font-family: 'Tajawal', sans-serif;
-            cursor: none; /* Hide default cursor for neon glow */
+            /* Cursor is back to normal */
         }
 
-        /* --- 1. VFX: Cursor Glow --- */
-        .cursor-glow {
-            position: fixed; width: 20px; height: 20px;
-            border-radius: 50%; background: rgba(180,0,255,0.8);
-            box-shadow: 0 0 20px #b400ff, 0 0 40px #7a00ff;
-            pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
-        }
-
-        /* --- 2. VFX: Lightning Flash --- */
-        .lightning {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(200, 0, 255, 0.15); opacity: 0;
-            pointer-events: none; z-index: 9998; transition: opacity 0.1s ease-out;
-        }
-
-        /* --- 3. Layout: Diagonal Icons --- */
+        /* --- 1. Corner Icons Fix --- */
         .bg-icon {
-            position: absolute; z-index: 90; width: 120px; pointer-events: none;
+            position: absolute;
+            z-index: 150; /* Higher than container to be ON TOP */
+            width: 120px;
+            pointer-events: none;
         }
-        .bg-ae { top: 20px; right: 20px; filter: drop-shadow(0 0 25px var(--neon-purple)); animation: float 6s infinite; }
-        .bg-am { bottom: 20px; left: 20px; border-radius: 50%; filter: drop-shadow(0 0 25px var(--neon-green-dark)); animation: float 7s infinite reverse; }
+
+        .bg-ae {
+            top: 20px; right: 20px;
+            filter: drop-shadow(0 0 25px var(--neon-purple));
+            animation: float 6s infinite;
+        }
+
+        .bg-am {
+            bottom: 20px; left: 20px; /* Positioned on top of container area */
+            border-radius: 50%;
+            filter: drop-shadow(0 0 25px var(--neon-green-dark));
+            animation: float 7s infinite reverse;
+        }
+
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* --- 4. Main Glass Container --- */
+        /* --- 2. Main Glass Container --- */
         .container {
             background: rgba(15, 5, 25, 0.85);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px; padding: 50px 30px;
-            width: 100%; max-width: 440px; text-align: center;
-            position: relative; z-index: 100;
+            border-radius: 30px;
+            padding: 50px 30px;
+            width: 100%; max-width: 440px;
+            text-align: center;
+            position: relative;
+            z-index: 100; /* Lower than bg-icons to keep them on top */
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.2);
         }
 
-        /* --- 5. Logo & Glitch Effect --- */
+        /* --- 3. Logo & Glitch --- */
         .logo-container {
             width: 140px; height: 140px; margin: 0 auto 15px;
-            border-radius: 50%; padding: 4px; background: var(--neon-purple);
+            border-radius: 50%; padding: 4px;
+            background: var(--neon-purple);
             box-shadow: 0 0 25px var(--neon-purple);
         }
+
         .logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #05000a; }
 
         .title-img {
             width: 85%; max-width: 250px; margin: 15px auto 5px; display: block;
         }
+
         .glitch { animation: glitch 5s infinite; }
         @keyframes glitch {
             0%, 92%, 100% { filter: none; transform: translate(0); }
@@ -80,35 +84,44 @@
         }
 
         .tagline {
-            font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--neon-blue);
-            font-weight: 900; text-transform: uppercase; margin-bottom: 30px;
-            border-bottom: 2px solid rgba(157, 0, 255, 0.3); display: inline-block; padding-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px; color: var(--neon-blue);
+            font-weight: 900; text-transform: uppercase;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(157, 0, 255, 0.3);
+            display: inline-block; padding-bottom: 5px;
         }
 
-        /* --- 6. Buttons & Interaction --- */
+        /* --- 4. Buttons --- */
         .links-wrapper { display: flex; flex-direction: column; gap: 15px; }
+
         .link-btn {
             display: flex; align-items: center; justify-content: center;
-            text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.05);
-            padding: 18px; border-radius: 15px; font-size: 17px; font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.2); transition: all 0.3s ease;
+            text-decoration: none; color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 18px; border-radius: 15px;
+            font-size: 17px; font-weight: 700;
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            transition: all 0.3s ease;
         }
+
         .link-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px #b400ff, 0 0 30px #7a00ff;
             border-color: var(--neon-blue);
         }
+
         .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: none; }
 
-        /* --- 7. Visitor Badge --- */
-        .visitor-badge { margin-top: 30px; font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+        .visitor-badge {
+            margin-top: 30px; font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
         .visitor-badge span { color: var(--neon-blue); font-weight: bold; }
 
     </style>
 </head>
 <body>
-
-    <div class="lightning" id="flash"></div>
 
     <img src="ae.png" alt="AE" class="bg-icon bg-ae">
     <img src="am.png" alt="AM" class="bg-icon bg-am">
@@ -120,7 +133,7 @@
 
         <img src="vr.png" alt="VORTX" class="title-img glitch">
         
-        <p class="tagline">Here is everything useful</p>
+        <p class="tagline">After Effects Templates & Motion Design Tools</p>
 
         <div class="links-wrapper">
             <a href="#" class="link-btn store-btn">🛒 Online Store</a>
@@ -133,41 +146,18 @@
     </div>
 
     <script>
-        // 1. Cursor Glow Logic
-        const cursor = document.createElement("div");
-        cursor.classList.add("cursor-glow");
-        document.body.appendChild(cursor);
-        document.addEventListener("mousemove", e => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
-        });
+        // 1. Visitor Counter Logic
+        let count = localStorage.getItem('v_stable_v3') || 1500;
+        count = parseInt(count) + 1;
+        localStorage.setItem('v_stable_v3', count);
+        document.getElementById('vCount').innerText = count.toLocaleString();
 
-        // 2. Lightning Click Effect
-        const flash = document.getElementById('flash');
-        document.addEventListener("click", () => {
-            flash.style.opacity = "1";
-            setTimeout(() => { flash.style.opacity = "0"; }, 120);
-        });
-
-        // 3. Parallax Background Movement
+        // 2. Parallax Background Movement
         document.addEventListener("mousemove", e => {
             const x = (window.innerWidth/2 - e.clientX)/60;
             const y = (window.innerHeight/2 - e.clientY)/60;
             document.body.style.transform = `translate(${x}px, ${y}px)`;
         });
-
-        // 4. Random Subtle Flash (Every 8s)
-        setInterval(() => {
-            flash.style.opacity = "0.2";
-            setTimeout(() => { flash.style.opacity = "0"; }, 100);
-        }, 8000);
-
-        // 5. Visitor Counter Logic
-        let count = localStorage.getItem('v_stable_final') || 1500;
-        count = parseInt(count) + 1;
-        localStorage.setItem('v_stable_final', count);
-        document.getElementById('vCount').innerText = count.toLocaleString();
     </script>
 </body>
 </html>
-
