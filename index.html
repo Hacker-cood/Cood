@@ -29,55 +29,44 @@
             padding: 20px; 
             color: #fff;
             overflow-x: hidden; 
-            position: relative;
         }
 
-        /* --- الحاوية الرئيسية --- */
-        .container {
-            background: rgba(20, 5, 35, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            border-radius: 25px;
-            padding: 30px 20px; 
+        /* --- الحاوية الجامعة (تجمع المستطيل والشعارات عشان نتحكم بالطبقات صح) --- */
+        .main-wrapper {
+            position: relative;
             width: 100%;
             max-width: 420px; 
-            text-align: center;
-            box-shadow: 0 0 40px rgba(157, 0, 255, 0.15);
-            position: relative; /* 🔴 مهم عشان نقدر نثبت الشعارات بناءً على زوايا هذا المستطيل */
-            z-index: 1; 
-            margin-top: 50px; 
+            margin-top: 40px; 
             margin-bottom: 20px; 
         }
 
-        /* --- تنسيق الشعارات العائمة (الآن صارت مربوطة بالمستطيل) --- */
-        /* شعار أفتر إفكتس (زاوية المستطيل اليمين من فوق) */
+        /* --- الشعارات العائمة (الآن هي خلف المستطيل 100%) --- */
+        /* شعار أفتر إفكتس */
         .bg-icon-right {
             position: absolute;
-            top: -45px; /* نرفعه فوق حافة المستطيل */
-            right: -45px; /* نطلعه يمين حافة المستطيل */
+            top: -45px; 
+            right: -45px; 
             width: 130px; 
-            z-index: -1; /* 🔴 هذا الأمر يخليه يرجع ورا خلفية المستطيل */
+            z-index: 0; /* 🔴 الطبقة الخلفية */
             border-radius: 18px; 
-            border: none;
             filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
             animation: floatRightTop 6s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        /* شعار لايت موشن (زاوية المستطيل اليسار من فوق) */
+        /* شعار لايت موشن */
         .bg-icon-left {
             position: absolute;
-            top: -45px; /* نرفعه فوق حافة المستطيل */
-            left: -45px; /* نطلعه يسار حافة المستطيل */
+            top: -45px; 
+            left: -45px; 
             width: 130px; 
-            z-index: -1; /* 🔴 هذا الأمر يخليه يرجع ورا خلفية المستطيل */
+            z-index: 0; /* 🔴 الطبقة الخلفية */
             border-radius: 50%; 
-            border: none;
             filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
             animation: floatLeftTop 7s ease-in-out infinite reverse; 
+            pointer-events: none;
         }
 
-        /* حركات الطفو */
         @keyframes floatRightTop {
             0%, 100% { transform: translateY(0) rotate(5deg); }
             50% { transform: translateY(-10px) rotate(10deg); }
@@ -86,6 +75,21 @@
         @keyframes floatLeftTop {
             0%, 100% { transform: translateY(0) rotate(-10deg); }
             50% { transform: translateY(-10px) rotate(-15deg); }
+        }
+
+        /* --- المستطيل الزجاجي --- */
+        .container {
+            background: rgba(20, 5, 35, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 25px;
+            padding: 30px 20px; 
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.15);
+            position: relative;
+            z-index: 10; /* 🔴 الطبقة الأمامية (تغطي على الشعارات) */
         }
 
         /* --- اللوقو الشخصي --- */
@@ -177,27 +181,27 @@
 </head>
 <body>
 
-    <div class="container">
-        
+    <div class="main-wrapper">
         <img src="am.png" alt="Alight Motion" class="bg-icon-left">
         <img src="ae.png" alt="After Effects" class="bg-icon-right">
 
-        <div class="logo-container">
-            <img src="lg.png" alt="VORTX Logo" class="logo">
-        </div>
+        <div class="container">
+            <div class="logo-container">
+                <img src="lg.png" alt="VORTX Logo" class="logo">
+            </div>
 
-        <img src="vr.png" alt="VORTX" class="title-img">
-        
-        <p class="bio">صانع محتوى | Edit & Motion Graphics</p>
+            <img src="vr.png" alt="VORTX" class="title-img">
+            
+            <p class="bio">صانع محتوى | Edit & Motion Graphics</p>
 
-        <div class="links-wrapper">
-            <a href="#" class="link-btn store-btn">🛒 المتجر الإلكتروني</a>
-            <a href="#" class="link-btn">📱 تيك توك</a>
-            <a href="#" class="link-btn">▶️ يوتيوب</a>
-            <a href="#" class="link-btn">📸 إنستقرام</a>
+            <div class="links-wrapper">
+                <a href="#" class="link-btn store-btn">🛒 المتجر الإلكتروني</a>
+                <a href="#" class="link-btn">📱 تيك توك</a>
+                <a href="#" class="link-btn">▶️ يوتيوب</a>
+                <a href="#" class="link-btn">📸 إنستقرام</a>
+            </div>
         </div>
     </div>
 
 </body>
 </html>
-
