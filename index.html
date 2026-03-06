@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTX | Pro Portfolio</title>
+    <title>VORTX | روابطي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-purple: #9d00ff;
             --neon-blue: #00f3ff;
             --neon-green-dark: #004d00; 
-            --bg-dark: #05000a;
-        }
-
-        /* --- تأثير ذرات الغبار المتحركة في الخلفية --- */
-        @keyframes particles {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 100%; }
+            --bg-dark: #0b001a; /* Reverted to your exact dark background color */
         }
 
         * {
@@ -28,156 +22,226 @@
 
         body {
             background-color: var(--bg-dark);
-            /* إضافة طبقة ذرات غبار وهمية باستخدام تدرج نقطي */
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(157, 0, 255, 0.05) 1px, transparent 0),
-                radial-gradient(circle at 15% 50%, rgba(157, 0, 255, 0.1), transparent 25%);
-            background-size: 50px 50px, 100% 100%;
-            animation: particles 100s linear infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px; 
+            padding: 20px; 
             color: #fff;
             overflow-x: hidden; 
         }
 
+        /* --- FEATURE 1: Neon Rain Particles (Handled via JS + CSS) --- */
+        .particle {
+            position: fixed;
+            top: -20px;
+            width: 2px;
+            height: 15px;
+            background: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+            border-radius: 5px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+
+        /* --- Original Background Wrapper --- */
         .main-wrapper {
             position: relative;
             width: 100%;
-            max-width: 480px; /* 🟢 تكبير العرض */
-            margin-top: 20px;
+            max-width: 420px; 
+            margin-top: 40px; 
+            margin-bottom: 20px; 
         }
 
-        /* --- الشعارات مع تأثير التنعيم والدمج (Oil/Smooth Effect) --- */
-        .bg-icon-right, .bg-icon-left {
+        /* --- Original Floating Logos --- */
+        .bg-icon-right {
             position: absolute;
-            width: 140px; 
+            top: -45px; 
+            right: -45px; 
+            width: 130px; 
             z-index: 0; 
-            /* 🔴 سر التنعيم: دمج الضباب مع التوهج لإخفاء الحواف الحادة */
-            filter: blur(0.5px) contrast(1.1) drop-shadow(0 0 30px var(--neon-purple));
-            mix-blend-mode: screen; /* يخليها تندمج مع السواد اللي وراها */
+            border-radius: 18px; 
+            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
+            animation: floatRightTop 6s ease-in-out infinite;
             pointer-events: none;
         }
 
-        .bg-icon-right {
-            top: -55px; 
-            right: -55px; 
-            border-radius: 20px;
-            animation: floatRight 6s ease-in-out infinite;
-        }
-
         .bg-icon-left {
-            top: -55px; 
-            left: -55px; 
+            position: absolute;
+            top: -45px; 
+            left: -45px; 
+            width: 130px; 
+            z-index: 0; 
             border-radius: 50%; 
-            filter: blur(0.5px) contrast(1.1) drop-shadow(0 0 30px var(--neon-green-dark));
-            animation: floatLeft 7s ease-in-out infinite reverse; 
+            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
+            animation: floatLeftTop 7s ease-in-out infinite reverse; 
+            pointer-events: none;
         }
 
-        @keyframes floatRight { 0%, 100% { transform: translate(0, 0) rotate(5deg); } 50% { transform: translate(-10px, -15px) rotate(10deg); } }
-        @keyframes floatLeft { 0%, 100% { transform: translate(0, 0) rotate(-10deg); } 50% { transform: translate(10px, -15px) rotate(-15deg); } }
+        /* --- FEATURE 2: New Alight Motion Logo (Slightly below middle, left side) --- */
+        .am-logo-new {
+            position: absolute;
+            top: 65%; /* Slightly below middle */
+            left: -30px; /* Slightly to the left side */
+            width: 60px; /* Small and clean */
+            border-radius: 50%;
+            z-index: 5;
+            filter: drop-shadow(0 0 15px var(--neon-purple)); /* Purple glow */
+            pointer-events: none;
+            animation: floatGentle 4s ease-in-out infinite;
+        }
 
-        /* --- المستطيل المرآة (Mirror/Glass Surface) --- */
+        @keyframes floatGentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes floatRightTop { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
+        @keyframes floatLeftTop { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-10px) rotate(-15deg); } }
+
+        /* --- FEATURE 5: Page Entrance Animation (Slide Up & Fade) --- */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Original Container (With Entrance Animation Added) --- */
         .container {
-            /* 🔴 تأثير المرآة: زيادة الشفافية مع لمعة بيضاء علوية */
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(20, 5, 35, 0.8) 100%);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            padding: 60px 35px; /* 🟢 تطويل الطول وزيادة الحشوة */
+            background: rgba(20, 5, 35, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 25px;
+            padding: 30px 20px; 
             width: 100%;
             text-align: center;
-            box-shadow: 
-                0 0 50px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.05); /* لمعة داخلية */
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.15);
             position: relative;
-            z-index: 10;
+            z-index: 10; 
+            /* Entrance Animation */
+            opacity: 0;
+            animation: slideUpFade 0.8s ease-out forwards;
         }
 
-        /* --- اللوقو الشخصي --- */
+        /* --- FEATURE 3: Profile Image Animation (Glowing Pulsing Ring) --- */
+        @keyframes ringPulse {
+            0% { box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple); transform: scale(1); }
+            50% { box-shadow: 0 0 25px var(--neon-purple), 0 0 60px var(--neon-purple); transform: scale(1.02); }
+            100% { box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple); transform: scale(1); }
+        }
+
         .logo-container {
-            width: 160px; 
-            height: 160px;
-            margin: 0 auto 20px;
+            width: 140px; 
+            height: 140px;
+            margin: 0 auto 12px;
             border-radius: 50%;
-            padding: 5px;
-            background: linear-gradient(45deg, var(--neon-purple), #fff);
-            box-shadow: 0 0 40px var(--neon-purple);
+            padding: 4px;
+            background: var(--neon-purple); 
             position: relative;
+            /* Added Pulse Animation */
+            animation: ringPulse 3s infinite ease-in-out;
         }
 
         .logo {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            border: 4px solid #05000a;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
+            border: 3px solid #0b001a; background-color: #0b001a;
         }
 
-        /* --- وميض كهربائي للاسم --- */
-        @keyframes electricPulse {
-            0%, 100% { filter: drop-shadow(0 0 15px var(--neon-purple)) brightness(1); }
-            50% { filter: drop-shadow(0 0 30px var(--neon-purple)) brightness(1.3); }
-        }
-
+        /* --- Original Title & Bio --- */
         .title-img {
-            width: 90%; 
-            max-width: 280px; 
-            margin: 10px auto;
-            display: block;
-            animation: electricPulse 3s infinite ease-in-out;
+            width: 80%; max-width: 240px; margin: 5px auto 8px; display: block;
+            filter: drop-shadow(0 0 15px rgba(157, 0, 255, 0.6)); 
         }
 
         p.bio {
-            font-size: 16px;
-            color: #ccc;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
+            font-size: 14px; color: #b3b3b3; margin-bottom: 20px; line-height: 1.6;
         }
 
-        /* --- الأزرار --- */
-        .links-wrapper { display: flex; flex-direction: column; gap: 15px; }
+        /* --- Buttons Wrapper --- */
+        .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
 
+        /* --- FEATURE 5: Button Entrance Animation Delay --- */
+        @keyframes fadeInBtn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* --- Original Button Styles + FEATURE 4 (Hover Animation) --- */
         .link-btn {
             display: flex; align-items: center; justify-content: center;
             text-decoration: none; color: #fff;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 18px;
-            border-radius: 18px;
-            font-size: 18px; font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.2);
-            transition: 0.4s;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 14px 20px; border-radius: 12px;
+            font-size: 16px; font-weight: 700;
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            position: relative; overflow: hidden;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            /* Feature 4: Smooth transition */
+            transition: all 0.3s ease;
+            
+            /* Feature 5: Hidden initially for entrance animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBtn 0.5s ease-out forwards;
         }
 
-        .link-btn:hover {
-            background: rgba(157, 0, 255, 0.15);
+        /* Cascading delays for buttons */
+        .link-btn:nth-child(1) { animation-delay: 0.4s; }
+        .link-btn:nth-child(2) { animation-delay: 0.5s; }
+        .link-btn:nth-child(3) { animation-delay: 0.6s; }
+        .link-btn:nth-child(4) { animation-delay: 0.7s; }
+
+        /* FEATURE 4: Hover and Tap effects */
+        .link-btn:hover, .link-btn:active {
+            background: rgba(157, 0, 255, 0.25);
             border-color: var(--neon-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 243, 255, 0.1);
+            /* Scale up slightly and increase glow */
+            transform: scale(1.05) !important; 
+            box-shadow: 0 0 25px var(--neon-purple);
         }
 
         .store-btn {
-            background: linear-gradient(90deg, #6200ea, #d500f9);
-            border: none;
-            box-shadow: 0 0 20px rgba(157, 0, 255, 0.4);
+            background: linear-gradient(90deg, #4a00e0, #8e2de2);
+            border: 1px solid var(--neon-blue);
         }
+
+        /* --- FEATURE 6: Visitor Counter Styling --- */
+        .visitor-counter {
+            margin-top: 25px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(157, 0, 255, 0.5);
+            opacity: 0;
+            animation: fadeInBtn 0.5s ease-out forwards;
+            animation-delay: 1s; /* Appears last */
+        }
+        .visitor-counter span { color: var(--neon-blue); }
+
     </style>
 </head>
 <body>
 
     <div class="main-wrapper">
-        <img src="am.png" alt="AM" class="bg-icon-left">
-        <img src="ae.png" alt="AE" class="bg-icon-right">
+        
+        <img src="am.png" alt="Alight Motion" class="bg-icon-left">
+        <img src="ae.png" alt="After Effects" class="bg-icon-right">
+
+        <img src="am.png" alt="AM Glow" class="am-logo-new">
 
         <div class="container">
             <div class="logo-container">
-                <img src="lg.png" alt="VORTX" class="logo">
+                <img src="lg.png" alt="VORTX Logo" class="logo">
             </div>
 
             <img src="vr.png" alt="VORTX" class="title-img">
             
-            <p class="bio">Edit & Motion Graphics | Professional</p>
+            <p class="bio">صانع محتوى | Edit & Motion Graphics</p>
 
             <div class="links-wrapper">
                 <a href="#" class="link-btn store-btn">🛒 المتجر الإلكتروني</a>
@@ -185,8 +249,43 @@
                 <a href="#" class="link-btn">▶️ يوتيوب</a>
                 <a href="#" class="link-btn">📸 إنستقرام</a>
             </div>
+
+            <div class="visitor-counter">
+                👁 Visits: <span id="visitCount">0</span>
+            </div>
         </div>
     </div>
 
+    <script>
+        // --- Feature 6: LocalStorage Visitor Counter Logic ---
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem('vortx_local_visits') || 0;
+            visits++;
+            localStorage.setItem('vortx_local_visits', visits);
+            document.getElementById('visitCount').innerText = visits;
+        });
+
+        // --- Feature 1: Lightweight Animated Rain/Particles Effect ---
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random horizontal position
+            particle.style.left = Math.random() * 100 + 'vw';
+            
+            // Random fall duration between 2s and 5s to keep it smooth and varied
+            particle.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+            
+            document.body.appendChild(particle);
+            
+            // Remove the particle from the DOM after it finishes falling to keep performance high
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+
+        // Create a new particle every 150ms. (Not too fast, won't lag mobile devices)
+        setInterval(createParticle, 150);
+    </script>
 </body>
 </html>
