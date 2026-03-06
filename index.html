@@ -48,10 +48,20 @@
             100% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.2); }
         }
 
-        /* --- Floating Icons (Back to the corners) --- */
+        /* --- Main Card Wrapper --- */
+        .main-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            z-index: 1;
+            opacity: 0;
+            animation: cardEntrance 0.8s ease-out forwards;
+        }
+
+        /* --- Floating Icons (Positioned behind the glass edges) --- */
         .bg-icon {
             position: absolute;
-            z-index: -2; /* Behind the glass */
+            z-index: 0; /* Behind the glass container */
             width: 135px;
             opacity: 0.9;
             pointer-events: none;
@@ -69,6 +79,7 @@
             top: -45px;
             left: -45px;
             border-radius: 50%;
+            /* Neon green glow for Alight Motion */
             filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
             animation: floatAM 7s ease-in-out infinite reverse;
         }
@@ -76,7 +87,7 @@
         @keyframes floatAE { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
         @keyframes floatAM { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-15px) rotate(-20deg); } }
 
-        /* --- Main Card --- */
+        /* --- Glass Container --- */
         .container {
             background: rgba(20, 5, 35, 0.75);
             backdrop-filter: blur(20px);
@@ -85,13 +96,11 @@
             border-radius: 25px;
             padding: 45px 30px;
             width: 100%;
-            max-width: 440px;
             text-align: center;
             position: relative;
-            z-index: 1;
+            z-index: 10; /* Higher than floating icons */
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.2);
-            opacity: 0;
-            animation: cardEntrance 0.8s ease-out forwards, cardPulse 4s infinite ease-in-out;
+            animation: cardPulse 4s infinite ease-in-out;
         }
 
         #cardCanvas {
@@ -104,7 +113,7 @@
             border-radius: 25px;
         }
 
-        /* --- Profile & Content --- */
+        /* --- Profile --- */
         .logo-container {
             width: 150px;
             height: 150px;
@@ -189,30 +198,32 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="main-wrapper">
         <img src="am.png" alt="Alight Motion" class="bg-icon bg-am">
         <img src="ae.png" alt="After Effects" class="bg-icon bg-ae">
-        
-        <canvas id="cardCanvas"></canvas>
 
-        <div class="logo-container">
-            <img src="lg.png" alt="VORTX Logo" class="logo">
-        </div>
+        <div class="container">
+            <canvas id="cardCanvas"></canvas>
 
-        <img src="vr.png" alt="VORTX" class="title-img">
-        <p class="bio">Content Creator | Edit & Motion Graphics</p>
+            <div class="logo-container">
+                <img src="lg.png" alt="VORTX Logo" class="logo">
+            </div>
 
-        <div class="links-wrapper">
-            <a href="#" class="link-btn store-btn">🛒 Online Store</a>
-            <a href="https://tiktok.com/@vortx" id="tk-link" class="link-btn">📱 TikTok</a>
-            <a href="#" class="link-btn">▶️ YouTube</a>
-            <a href="#" class="link-btn">📸 Instagram</a>
-        </div>
+            <img src="vr.png" alt="VORTX" class="title-img">
+            <p class="bio">Content Creator | Edit & Motion Graphics</p>
 
-        <button class="copy-btn" onclick="copyLink()">📋 Copy TikTok Link</button>
+            <div class="links-wrapper">
+                <a href="#" class="link-btn store-btn">🛒 Online Store</a>
+                <a href="https://tiktok.com/@vortx" id="tk-link" class="link-btn">📱 TikTok</a>
+                <a href="#" class="link-btn">💬 Telegram</a>
+                <a href="#" class="link-btn">📸 Instagram</a>
+            </div>
 
-        <div class="visitor-counter">
-            👁 Visitors: <span id="visitCount">0</span>
+            <button class="copy-btn" onclick="copyLink()">📋 Copy TikTok Link</button>
+
+            <div class="visitor-counter">
+                👁 Visitors: <span id="visitCount">0</span>
+            </div>
         </div>
     </div>
 
