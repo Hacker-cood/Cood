@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTX | روابطي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>VORTX | My Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-purple: #9d00ff;
             --neon-blue: #00f3ff;
-            --neon-green-dark: #004d00; 
-            --bg-dark: #0b001a; /* Reverted to your exact dark background color */
+            --bg-dark: #0b001a;
         }
 
         * {
@@ -26,183 +25,138 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px; 
+            padding: 40px 20px;
             color: #fff;
-            overflow-x: hidden; 
-        }
-
-        /* --- FEATURE 1: Neon Rain Particles (Handled via JS + CSS) --- */
-        .particle {
-            position: fixed;
-            top: -20px;
-            width: 2px;
-            height: 15px;
-            background: var(--neon-purple);
-            box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
-            border-radius: 5px;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.6;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(105vh); }
-        }
-
-        /* --- Original Background Wrapper --- */
-        .main-wrapper {
+            overflow-x: hidden;
             position: relative;
+        }
+
+        /* --- 1. Animated Particles Inside Card (Canvas) --- */
+        #cardCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px; 
-            margin-top: 40px; 
-            margin-bottom: 20px; 
+            height: 100%;
+            z-index: -1;
+            border-radius: 25px;
         }
 
-        /* --- Original Floating Logos --- */
-        .bg-icon-right {
-            position: absolute;
-            top: -45px; 
-            right: -45px; 
-            width: 130px; 
-            z-index: 0; 
-            border-radius: 18px; 
-            filter: drop-shadow(0 0 25px var(--neon-purple)) drop-shadow(0 0 50px var(--neon-purple));
-            animation: floatRightTop 6s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .bg-icon-left {
-            position: absolute;
-            top: -45px; 
-            left: -45px; 
-            width: 130px; 
-            z-index: 0; 
-            border-radius: 50%; 
-            filter: drop-shadow(0 0 25px var(--neon-green-dark)) drop-shadow(0 0 50px var(--neon-green-dark));
-            animation: floatLeftTop 7s ease-in-out infinite reverse; 
-            pointer-events: none;
-        }
-
-        /* --- FEATURE 2: New Alight Motion Logo (Slightly below middle, left side) --- */
-        .am-logo-new {
-            position: absolute;
-            top: 65%; /* Slightly below middle */
-            left: -30px; /* Slightly to the left side */
-            width: 60px; /* Small and clean */
-            border-radius: 50%;
-            z-index: 5;
-            filter: drop-shadow(0 0 15px var(--neon-purple)); /* Purple glow */
-            pointer-events: none;
-            animation: floatGentle 4s ease-in-out infinite;
-        }
-
-        @keyframes floatGentle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes floatRightTop { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
-        @keyframes floatLeftTop { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-10px) rotate(-15deg); } }
-
-        /* --- FEATURE 5: Page Entrance Animation (Slide Up & Fade) --- */
-        @keyframes slideUpFade {
-            0% { opacity: 0; transform: translateY(40px); }
+        /* --- 3. Entrance Animation --- */
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Original Container (With Entrance Animation Added) --- */
+        @keyframes btnFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 8. Optional Pulse Effect --- */
+        @keyframes cardPulse {
+            0% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.15); }
+            50% { box-shadow: 0 0 60px rgba(157, 0, 255, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(157, 0, 255, 0.15); }
+        }
+
+        /* --- 2. Main Card Container (Glow & Shadows) --- */
         .container {
-            background: rgba(20, 5, 35, 0.7);
+            background: rgba(20, 5, 35, 0.75);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(157, 0, 255, 0.3);
             border-radius: 25px;
-            padding: 30px 20px; 
+            padding: 40px 30px;
             width: 100%;
+            max-width: 450px;
             text-align: center;
-            box-shadow: 0 0 40px rgba(157, 0, 255, 0.15);
             position: relative;
-            z-index: 10; 
-            /* Entrance Animation */
+            z-index: 1;
+            /* 2. Glow & Shadows */
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            /* 3. Entrance */
             opacity: 0;
-            animation: slideUpFade 0.8s ease-out forwards;
-        }
-
-        /* --- FEATURE 3: Profile Image Animation (Glowing Pulsing Ring) --- */
-        @keyframes ringPulse {
-            0% { box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple); transform: scale(1); }
-            50% { box-shadow: 0 0 25px var(--neon-purple), 0 0 60px var(--neon-purple); transform: scale(1.02); }
-            100% { box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple); transform: scale(1); }
+            animation: cardEntrance 0.8s ease-out forwards, cardPulse 4s infinite ease-in-out;
         }
 
         .logo-container {
-            width: 140px; 
-            height: 140px;
-            margin: 0 auto 12px;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
             border-radius: 50%;
             padding: 4px;
-            background: var(--neon-purple); 
+            background: var(--neon-purple);
+            box-shadow: 0 0 25px var(--neon-purple);
             position: relative;
-            /* Added Pulse Animation */
-            animation: ringPulse 3s infinite ease-in-out;
+            opacity: 0;
+            animation: btnFadeIn 0.5s ease-out forwards;
+            animation-delay: 0.3s;
         }
 
         .logo {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 3px solid #0b001a; background-color: #0b001a;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            border: 3px solid #0b001a;
         }
 
-        /* --- Original Title & Bio --- */
+        /* --- 5. Convert Text to English --- */
         .title-img {
-            width: 80%; max-width: 240px; margin: 5px auto 8px; display: block;
-            filter: drop-shadow(0 0 15px rgba(157, 0, 255, 0.6)); 
+            width: 85%;
+            max-width: 260px;
+            margin: 5px auto 10px;
+            display: block;
+            filter: drop-shadow(0 0 15px rgba(157, 0, 255, 0.6));
+            opacity: 0;
+            animation: btnFadeIn 0.5s ease-out forwards;
+            animation-delay: 0.5s;
         }
 
         p.bio {
-            font-size: 14px; color: #b3b3b3; margin-bottom: 20px; line-height: 1.6;
-        }
-
-        /* --- Buttons Wrapper --- */
-        .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
-
-        /* --- FEATURE 5: Button Entrance Animation Delay --- */
-        @keyframes fadeInBtn {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* --- Original Button Styles + FEATURE 4 (Hover Animation) --- */
-        .link-btn {
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; color: #fff;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 14px 20px; border-radius: 12px;
-            font-size: 16px; font-weight: 700;
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            position: relative; overflow: hidden;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
-            /* Feature 4: Smooth transition */
-            transition: all 0.3s ease;
-            
-            /* Feature 5: Hidden initially for entrance animation */
+            font-size: 15px;
+            color: #b3b3b3;
+            margin-bottom: 25px;
+            line-height: 1.6;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBtn 0.5s ease-out forwards;
+            animation: btnFadeIn 0.5s ease-out forwards;
+            animation-delay: 0.6s;
         }
 
-        /* Cascading delays for buttons */
-        .link-btn:nth-child(1) { animation-delay: 0.4s; }
-        .link-btn:nth-child(2) { animation-delay: 0.5s; }
-        .link-btn:nth-child(3) { animation-delay: 0.6s; }
-        .link-btn:nth-child(4) { animation-delay: 0.7s; }
+        /* --- 4. Button Hover Effects --- */
+        .links-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-        /* FEATURE 4: Hover and Tap effects */
-        .link-btn:hover, .link-btn:active {
-            background: rgba(157, 0, 255, 0.25);
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 16px 20px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: btnFadeIn 0.5s ease-out forwards;
+        }
+
+        /* Staggered entrance */
+        .link-btn:nth-child(1) { animation-delay: 0.7s; }
+        .link-btn:nth-child(2) { animation-delay: 0.8s; }
+        .link-btn:nth-child(3) { animation-delay: 0.9s; }
+        .link-btn:nth-child(4) { animation-delay: 1.0s; }
+
+        .link-btn:hover {
+            transform: scale(1.05); /* 4. Scale up */
+            background: rgba(157, 0, 255, 0.2);
             border-color: var(--neon-blue);
-            /* Scale up slightly and increase glow */
-            transform: scale(1.05) !important; 
-            box-shadow: 0 0 25px var(--neon-purple);
+            box-shadow: 0 0 25px var(--neon-purple); /* 4. Increase glow */
         }
 
         .store-btn {
@@ -210,82 +164,128 @@
             border: 1px solid var(--neon-blue);
         }
 
-        /* --- FEATURE 6: Visitor Counter Styling --- */
+        /* --- 7. Copy Link Button --- */
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--neon-blue);
+            font-size: 13px;
+            padding: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            color: var(--neon-blue);
+            transition: 0.3s;
+            opacity: 0;
+            animation: btnFadeIn 0.5s ease-out forwards;
+            animation-delay: 1.1s;
+        }
+        .copy-btn:hover { background: rgba(0, 243, 255, 0.1); }
+
+        /* --- 6. Visitor Counter --- */
         .visitor-counter {
             margin-top: 25px;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 700;
-            text-shadow: 0 0 5px rgba(157, 0, 255, 0.5);
+            color: rgba(255, 255, 255, 0.5);
             opacity: 0;
-            animation: fadeInBtn 0.5s ease-out forwards;
-            animation-delay: 1s; /* Appears last */
+            animation: btnFadeIn 0.5s ease-out forwards;
+            animation-delay: 1.2s;
         }
-        .visitor-counter span { color: var(--neon-blue); }
+        .visitor-counter span { color: var(--neon-blue); font-weight: bold; }
 
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        
-        <img src="am.png" alt="Alight Motion" class="bg-icon-left">
-        <img src="ae.png" alt="After Effects" class="bg-icon-right">
+    <div class="container">
+        <canvas id="cardCanvas"></canvas>
 
-        <img src="am.png" alt="AM Glow" class="am-logo-new">
+        <div class="logo-container">
+            <img src="lg.png" alt="VORTX Logo" class="logo">
+        </div>
 
-        <div class="container">
-            <div class="logo-container">
-                <img src="lg.png" alt="VORTX Logo" class="logo">
-            </div>
+        <img src="vr.png" alt="VORTX" class="title-img">
+        <p class="bio">Content Creator | Edit & Motion Graphics</p>
 
-            <img src="vr.png" alt="VORTX" class="title-img">
-            
-            <p class="bio">صانع محتوى | Edit & Motion Graphics</p>
+        <div class="links-wrapper">
+            <a href="#" class="link-btn store-btn" title="Visit our official online store">🛒 Online Store</a>
+            <a href="https://tiktok.com/@your_user" class="link-btn" title="Follow me on TikTok">📱 TikTok</a>
+            <a href="#" class="link-btn" title="Subscribe to my YouTube channel">▶️ YouTube</a>
+            <a href="#" class="link-btn" title="Follow me on Instagram">📸 Instagram</a>
+        </div>
 
-            <div class="links-wrapper">
-                <a href="#" class="link-btn store-btn">🛒 المتجر الإلكتروني</a>
-                <a href="#" class="link-btn">📱 تيك توك</a>
-                <a href="#" class="link-btn">▶️ يوتيوب</a>
-                <a href="#" class="link-btn">📸 إنستقرام</a>
-            </div>
+        <button class="copy-btn" onclick="copyLink()">📋 Copy TikTok Link</button>
 
-            <div class="visitor-counter">
-                👁 Visits: <span id="visitCount">0</span>
-            </div>
+        <div class="visitor-counter">
+            👁 Visitors: <span id="visitCount">0</span>
         </div>
     </div>
 
     <script>
-        // --- Feature 6: LocalStorage Visitor Counter Logic ---
+        // --- 6. Visitor Counter Logic ---
         document.addEventListener("DOMContentLoaded", () => {
-            let visits = localStorage.getItem('vortx_local_visits') || 0;
+            let visits = localStorage.getItem('vortx_visits') || 0;
             visits++;
-            localStorage.setItem('vortx_local_visits', visits);
+            localStorage.setItem('vortx_visits', visits);
             document.getElementById('visitCount').innerText = visits;
         });
 
-        // --- Feature 1: Lightweight Animated Rain/Particles Effect ---
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            // Random horizontal position
-            particle.style.left = Math.random() * 100 + 'vw';
-            
-            // Random fall duration between 2s and 5s to keep it smooth and varied
-            particle.style.animationDuration = Math.random() * 3 + 2 + 's'; 
-            
-            document.body.appendChild(particle);
-            
-            // Remove the particle from the DOM after it finishes falling to keep performance high
-            setTimeout(() => {
-                particle.remove();
-            }, 5000);
+        // --- 7. Copy Link Function ---
+        function copyLink() {
+            const tiktokLink = "https://tiktok.com/@your_user";
+            navigator.clipboard.writeText(tiktokLink).then(() => {
+                alert("TikTok link copied to clipboard!");
+            });
         }
 
-        // Create a new particle every 150ms. (Not too fast, won't lag mobile devices)
-        setInterval(createParticle, 150);
+        // --- 1. Lightweight Particles Background ---
+        const canvas = document.getElementById('cardCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(157, 0, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        initCanvas();
+        createParticles();
+        animate();
+        window.addEventListener('resize', initCanvas);
     </script>
 </body>
 </html>
