@@ -48,7 +48,10 @@
             width: 120px; pointer-events: none;
         }
         .bg-ae { top: 20px; right: 20px; filter: drop-shadow(0 0 25px var(--neon-purple)); animation: float 6s infinite; }
-        .bg-am { bottom: 20px; left: 20px; border-radius: 50%; filter: drop-shadow(0 0 25px var(--neon-green-dark)); animation: float 7s infinite reverse; }
+        
+        /* تم رفع شعار لايت موشن للأعلى ليظهر بشكل كامل */
+        .bg-am { bottom: 85px; left: 25px; border-radius: 50%; filter: drop-shadow(0 0 25px var(--neon-green-dark)); animation: float 7s infinite reverse; }
+        
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* --- 3. Main Glass Container --- */
@@ -145,7 +148,6 @@
             object-fit: contain;
         }
         
-        /* تكبير إجباري للتلجرام لتعويض الفراغ الشفاف في الصورة */
         .btn-icon-telegram {
             transform: scale(1.3);
         }
@@ -161,7 +163,7 @@
             border-color: #00f3ff !important; transform: scale(1.05) !important;
         }
 
-        /* --- 7. NEW: Glass Visitor Badge --- */
+        /* --- 7. Glass Visitor Badge --- */
         .visitor-badge-container {
             margin-top: 35px;
             display: flex;
