@@ -1,106 +1,116 @@
-<style>
-    /* 1. Cursor Glow - Optimized for Desktop */
-    @media (min-width: 1024px) {
-        body { cursor: none; }
-        .cursor-glow {
-            position: fixed;
-            width: 15px; height: 15px;
-            border-radius: 50%;
-            background: #b400ff;
-            box-shadow: 0 0 20px #b400ff, 0 0 40px #7a00ff, 0 0 60px #b400ff;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: screen;
-            transition: transform 0.08s ease-out;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTX | Pro Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #9d00ff;
+            --neon-blue: #00f3ff;
+            --bg-dark: #0b001a;
         }
-    }
 
-    /* 2. Lightning/Energy Flash Overlay */
-    .lightning-effect {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(180, 0, 255, 0.12);
-        opacity: 0;
-        pointer-events: none;
-        z-index: 9998;
-        transition: opacity 0.1s ease-out;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* 3. Logo Glitch Animation */
-    .glitch-vfx {
-        animation: glitch-anim 4s infinite;
-        display: inline-block;
-    }
-    @keyframes glitch-anim {
-        0% { filter: none; transform: translate(0); }
-        92% { filter: none; transform: translate(0); }
-        94% { filter: brightness(1.8) hue-rotate(45deg); transform: translate(2px, -1px); }
-        96% { filter: contrast(2) saturate(1.5); transform: translate(-2px, 1px); }
-        98% { filter: brightness(1.2) sepia(0.5); transform: translate(1px, 0); }
-        100% { filter: none; transform: translate(0); }
-    }
+        body {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px; color: #fff;
+            overflow-x: hidden; position: relative;
+            font-family: 'Tajawal', sans-serif;
+            transition: transform 0.1s ease-out;
+        }
 
-    /* 4. Button Pulse & Hover Stability */
-    .link-btn, .store-btn {
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
-    }
-    .link-btn:hover, .store-btn:hover {
-        transform: scale(1.05) translateY(-2px) !important;
-        box-shadow: 0 0 20px #b400ff, 0 0 40px rgba(122, 0, 255, 0.6) !important;
-    }
+        /* Lightning Effect Overlay */
+        .lightning-effect {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(180, 0, 255, 0.1); opacity: 0;
+            pointer-events: none; z-index: 9999; transition: opacity 0.1s;
+        }
 
-    /* 5. Parallax Wrapper Stability */
-    body {
-        transition: transform 0.1s ease-out;
-        transform-origin: center;
-    }
-</style>
+        /* Floating Corner Icons */
+        .bg-icon {
+            position: absolute; z-index: 50; width: 120px; pointer-events: none;
+        }
+        .bg-ae { top: 20px; right: 20px; filter: drop-shadow(0 0 20px var(--neon-purple)); }
+        .bg-am { bottom: 20px; left: 20px; filter: drop-shadow(0 0 20px #004d00); }
 
-<script>
-    // --- 1. Initialize VFX Elements ---
-    const flashLayer = document.createElement("div");
-    flashLayer.className = "lightning-effect";
-    document.body.appendChild(flashLayer);
+        /* Main Container */
+        .container {
+            background: rgba(20, 5, 35, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px; padding: 45px 30px;
+            width: 100%; max-width: 440px; text-align: center;
+            position: relative; z-index: 10;
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.2);
+        }
 
-    // --- 2. Cursor Glow Logic (Desktop Only) ---
-    if (window.innerWidth > 1024) {
-        const cursor = document.createElement("div");
-        cursor.className = "cursor-glow";
-        document.body.appendChild(cursor);
+        .logo-container {
+            width: 140px; height: 140px; margin: 0 auto 15px;
+            border-radius: 50%; padding: 4px;
+            background: var(--neon-purple); box-shadow: 0 0 25px var(--neon-purple);
+        }
+        .logo { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #0b001a; }
 
-        document.addEventListener("mousemove", (e) => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
+        .title-img { width: 85%; max-width: 250px; margin: 10px auto; filter: drop-shadow(0 0 15px var(--neon-purple)); }
+        .tagline { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--neon-blue); font-weight: 900; margin-bottom: 25px; text-transform: uppercase; }
+
+        .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
+        .link-btn {
+            text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.05);
+            padding: 16px; border-radius: 12px; font-weight: 700;
+            border: 1px solid rgba(157, 0, 255, 0.2); transition: 0.3s;
+        }
+        .link-btn:hover { transform: scale(1.05); background: rgba(157, 0, 255, 0.15); box-shadow: 0 0 20px var(--neon-purple); }
+        .store-btn { background: linear-gradient(90deg, #4a00e0, #8e2de2); border: none; }
+
+        .visitor-badge { margin-top: 25px; font-size: 12px; opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="lightning-effect" id="flash"></div>
+    <img src="ae.png" alt="AE" class="bg-icon bg-ae">
+    <img src="am.png" alt="AM" class="bg-icon bg-am">
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="lg.png" alt="Avatar" class="logo">
+        </div>
+        <img src="vr.png" alt="VORTX" class="title-img">
+        <p class="tagline">After Effects Templates & Motion Design Tools</p>
+        <div class="links-wrapper">
+            <a href="#" class="link-btn store-btn">🛒 Online Store</a>
+            <a href="#" class="link-btn">📱 TikTok</a>
+            <a href="#" class="link-btn">💬 Telegram</a>
+            <a href="#" class="link-btn">📸 Instagram</a>
+        </div>
+        <div class="visitor-badge">👁 Visitors: <span id="vCount">1500</span></div>
+    </div>
+
+    <script>
+        // Fix for Visitor Counter
+        let count = localStorage.getItem('vCount') || 1500;
+        count = parseInt(count) + 1;
+        localStorage.setItem('vCount', count);
+        document.getElementById('vCount').innerText = count.toLocaleString();
+
+        // Flash Effect
+        const flash = document.getElementById('flash');
+        document.addEventListener('click', () => {
+            flash.style.opacity = '1';
+            setTimeout(() => { flash.style.opacity = '0'; }, 100);
         });
-    }
 
-    // --- 3. Lightning Energy Click Effect ---
-    document.addEventListener("click", (e) => {
-        // Trigger only on buttons/links or general background
-        flashLayer.style.opacity = "1";
-        setTimeout(() => { flashLayer.style.opacity = "0"; }, 100);
-    });
-
-    // --- 4. Background Parallax (Subtle) ---
-    document.addEventListener("mousemove", (e) => {
-        const moveX = (window.innerWidth / 2 - e.clientX) / 60;
-        const moveY = (window.innerHeight / 2 - e.clientY) / 60;
-        // Applying to a wrapper is safer, but here we follow your body request
-        document.body.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    });
-
-    // --- 5. Random Subtle Energy Flashes (8s Interval) ---
-    setInterval(() => {
-        flashLayer.style.opacity = "0.08";
-        setTimeout(() => { flashLayer.style.opacity = "0"; }, 150);
-    }, 8000);
-
-    // --- 6. Apply Glitch Class Automatically ---
-    // This looks for your VORTX logo image and applies the glitch
-    window.onload = () => {
-        const logo = document.querySelector('.title-img') || document.querySelector('.vortx-title');
-        if(logo) logo.classList.add('glitch-vfx');
-    };
-</script>
+        // Parallax Effect
+        document.addEventListener("mousemove", e => {
+            const x = (window.innerWidth/2 - e.clientX)/60;
+            const y = (window.innerHeight/2 - e.clientY)/60;
+            document.body.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>
