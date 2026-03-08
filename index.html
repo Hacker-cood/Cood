@@ -25,13 +25,11 @@
             min-height: 100vh;
             display: flex; 
             flex-direction: column;
-            /* التعديل الجذري: يبدأ من فوق ويسمح بالنزول */
             justify-content: flex-start; 
             align-items: center;
-            /* مسافة 90 بكسل من فوق عشان شعار افتر افكتس والروبوت يظهرون كاملين */
             padding: 90px 20px 50px; 
             color: #fff;
-            overflow-x: hidden; /* يمنع تحرك الشاشة يمين ويسار فقط */
+            overflow-x: hidden; 
             position: relative;
             font-family: 'Tajawal', sans-serif;
         }
@@ -54,7 +52,6 @@
             position: absolute; z-index: 150; 
             width: 120px; pointer-events: none;
         }
-        /* الشعار الحين بيظهر كامل لأن الشاشة تبدأ من فوق */
         .bg-ae { top: 20px; right: 20px; filter: drop-shadow(0 0 25px var(--neon-purple)); animation: float 6s infinite; }
         .bg-am { bottom: 85px; left: 20px; border-radius: 50%; filter: drop-shadow(0 0 25px var(--neon-green-dark)); animation: float 7s infinite reverse; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -68,7 +65,6 @@
             position: relative; z-index: 100;
             box-shadow: 0 0 40px rgba(157, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
             overflow: hidden;
-            /* لضمان توسيطها دايم */
             margin: 0 auto; 
         }
 
@@ -187,7 +183,6 @@
 
         /* --- 8. Cyber Robot CSS --- */
         .robot-wrapper {
-            /* التعديل: Absolute عشان يتحرك مع الصفحة ومسافة من فوق */
             position: absolute; top: 15px; left: 50%; margin-left: -22.5px; 
             width: var(--robot-size); height: var(--robot-size);
             z-index: 9999; touch-action: none; cursor: grab;
@@ -294,9 +289,9 @@
 
         <div class="links-wrapper">
             <a href="#" class="link-btn store-btn">🛒 Online Store</a>
-            <a href="#" class="link-btn"><img src="tik.png" alt="TikTok" class="btn-icon glow-tiktok"> TikTok</a>
-            <a href="#" class="link-btn" id="telegram-btn"><img src="tly.png" alt="Telegram" class="btn-icon btn-icon-telegram glow-telegram"> Telegram</a>
-            <a href="#" class="link-btn"><img src="ins.png" alt="Instagram" class="btn-icon glow-instagram"> Instagram</a>
+            <a href="https://www.tiktok.com/@ortr.1?_r=1&_t=ZS-94WfLhF9TMt" target="_blank" class="link-btn"><img src="tik.png" alt="TikTok" class="btn-icon glow-tiktok"> TikTok</a>
+            <a href="https://t.me/popo_jo" target="_blank" class="link-btn" id="telegram-btn"><img src="tly.png" alt="Telegram" class="btn-icon btn-icon-telegram glow-telegram"> Telegram</a>
+            <a href="https://www.instagram.com/toix.8i?igsh=Z3B1eWdwNGJocW9q" target="_blank" class="link-btn"><img src="ins.png" alt="Instagram" class="btn-icon glow-instagram"> Instagram</a>
         </div>
 
         <div class="visitor-badge-container">
@@ -376,7 +371,6 @@
             if(!telegramBtn) return;
             const targetRect = telegramBtn.getBoundingClientRect();
             const robotRect = robot.getBoundingClientRect();
-            // تعديل بسيط لحساب المسافة بدقة بعد السماح بالنزول
             const moveX = targetRect.left - robotRect.left - 80; 
             const moveY = targetRect.top - robotRect.top + 10;
             
@@ -417,7 +411,6 @@
             robotMesh.classList.add('robot-spin', 'robot-red-theme');
             setTimeout(() => { robotMesh.classList.remove('robot-spin', 'robot-red-theme'); }, 500);
             
-            // استخدام pageX و pageY لحل مشكلة السحب وقت النزول
             initialX = e.touches[0].pageX - xOffset;
             initialY = e.touches[0].pageY - yOffset;
             robot.style.transition = 'none';
