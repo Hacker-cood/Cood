@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTX | Store</title>
+    <title>VORTX | Pro Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-purple: #9d00ff;
-            --neon-blue: #00f3ff;
+            --neon-purple: #b400ff; /* بنفسجي ساطع */
+            --dark-purple: #5e00b3;
             --bg-dark: #05000a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        /* التعديل هنا للنزول السلس بين الأقسام */
         html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-dark);
+            /* إضافة خلفية شبكية احترافية للمتجر */
+            background-image: 
+                linear-gradient(rgba(180, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-attachment: fixed;
             min-height: 100vh;
             color: #fff;
             font-family: 'Tajawal', sans-serif;
@@ -28,105 +32,139 @@
             align-items: center;
         }
 
-        .store-container { width: 100%; max-width: 800px; }
+        .store-container { width: 100%; max-width: 850px; position: relative; z-index: 10; }
 
         /* الهيدر وزر الرجوع */
         .store-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding-bottom: 15px;
-            border-bottom: 1px solid rgba(157, 0, 255, 0.2);
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(180, 0, 255, 0.3);
+            box-shadow: 0 10px 20px -10px rgba(180, 0, 255, 0.2);
         }
 
+        /* تعديل لون فورتكس للبنفسجي مع التوهج */
         .store-title {
-            font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 900;
-            color: #fff; text-shadow: 0 0 15px var(--neon-purple); text-transform: uppercase;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff; padding: 8px 15px; border-radius: 8px; text-decoration: none;
-            font-weight: 700; transition: all 0.3s; backdrop-filter: blur(5px); font-size: 14px;
-        }
-
-        .back-btn:hover { background: rgba(157, 0, 255, 0.2); border-color: var(--neon-purple); }
-
-        /* --- شريط الأقسام الزجاجي (الجديد) --- */
-        .category-nav {
-            display: flex; justify-content: center; gap: 10px;
-            position: sticky; top: 15px; z-index: 1000;
-            background: rgba(5, 0, 10, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 10px; border-radius: 20px; border: 1px solid rgba(157, 0, 255, 0.3);
-            margin-bottom: 40px; box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-        }
-
-        .cat-btn {
-            color: #fff; text-decoration: none; font-weight: 700; font-family: 'Montserrat', sans-serif;
-            padding: 8px 20px; border-radius: 12px; font-size: 14px;
-            background: rgba(255,255,255,0.05); transition: all 0.3s; border: 1px solid transparent;
-        }
-
-        .cat-btn:hover, .cat-btn:active {
-            background: rgba(157, 0, 255, 0.2); border-color: var(--neon-purple);
-            box-shadow: 0 0 10px rgba(157, 0, 255, 0.4); transform: translateY(-2px);
-        }
-
-        /* عناوين الأقسام */
-        .section-title {
-            font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900;
-            color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
-            margin: 50px 0 20px; padding-bottom: 10px; border-bottom: 1px dashed rgba(0, 243, 255, 0.2);
+            font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900;
+            color: #d866ff; /* بنفسجي فاتح للقراءة */
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple); 
             text-transform: uppercase; letter-spacing: 2px;
         }
 
-        /* شبكة المنتجات */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(180, 0, 255, 0.4);
+            color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none;
+            font-weight: 700; transition: all 0.3s; backdrop-filter: blur(5px); box-shadow: 0 0 10px rgba(180,0,255,0.1);
+        }
+        .back-btn:hover { background: rgba(180, 0, 255, 0.2); box-shadow: 0 0 15px var(--neon-purple); transform: translateX(-3px); }
 
-        /* كرت المنتج */
+        /* --- الأزرار العلوية للبرامج (التعديل الجديد الاحترافي) --- */
+        .programs-nav {
+            display: flex; justify-content: center; gap: 20px; width: 100%; margin-bottom: 20px;
+        }
+        .prog-btn {
+            flex: 1; padding: 18px 10px; font-size: 18px; font-weight: 900; font-family: 'Montserrat', sans-serif;
+            background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(180, 0, 255, 0.2);
+            border-radius: 15px; color: #888; cursor: pointer; transition: all 0.4s;
+            text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px);
+        }
+        /* الزر الفعال */
+        .prog-btn.active {
+            color: #fff; background: rgba(180, 0, 255, 0.15); border-color: var(--neon-purple);
+            box-shadow: 0 0 25px rgba(180, 0, 255, 0.4), inset 0 0 10px rgba(180, 0, 255, 0.2);
+            text-shadow: 0 0 8px #fff; transform: translateY(-3px);
+        }
+
+        /* --- شريط الأقسام الزجاجي العريض (الشيكات وغيرها) --- */
+        .category-nav {
+            display: flex; justify-content: space-between; gap: 15px; width: 100%;
+            position: sticky; top: 15px; z-index: 1000;
+            background: rgba(5, 0, 10, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 12px; border-radius: 20px; border: 1px solid rgba(180, 0, 255, 0.4);
+            margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .cat-btn {
+            flex: 1; /* هذا اللي يخليها تمتد بالعرض بالتساوي */
+            text-align: center;
+            color: #fff; text-decoration: none; font-weight: 900; font-family: 'Montserrat', sans-serif;
+            padding: 12px 0; border-radius: 12px; font-size: 16px; letter-spacing: 1px;
+            background: rgba(255,255,255,0.03); border: 1px solid transparent; cursor: pointer; transition: all 0.3s;
+        }
+
+        .cat-btn:hover, .cat-btn:active {
+            background: rgba(180, 0, 255, 0.2); border-color: var(--neon-purple);
+            box-shadow: 0 0 15px rgba(180, 0, 255, 0.5); transform: translateY(-2px);
+        }
+
+        /* إخفاء وإظهار الأقسام حسب البرنامج */
+        .app-section { display: none; animation: fadeInSec 0.5s ease forwards; }
+        .app-section.active-app { display: block; }
+        @keyframes fadeInSec { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* تعديل العناوين للبنفسجي */
+        .section-title {
+            font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 900;
+            color: #d866ff; text-shadow: 0 0 15px var(--neon-purple);
+            margin: 60px 0 25px; padding-bottom: 10px; position: relative;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        /* خط متوهج تحت العنوان للتجميل */
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 80px; height: 3px;
+            background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); border-radius: 5px;
+        }
+
+        /* شبكة المنتجات */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+
+        /* كرت المنتج - زيادة الفخامة */
         .product-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(15, 5, 25, 0.4) 100%);
-            backdrop-filter: blur(10px); border: 1px solid rgba(157, 0, 255, 0.2);
-            border-radius: 20px; padding: 15px; text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, rgba(20, 10, 30, 0.8) 0%, rgba(5, 0, 10, 0.9) 100%);
+            backdrop-filter: blur(10px); border: 1px solid rgba(180, 0, 255, 0.2);
+            border-radius: 20px; padding: 20px; text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-5px); box-shadow: 0 10px 25px rgba(157, 0, 255, 0.2); border-color: rgba(157, 0, 255, 0.5);
+            transform: translateY(-8px); box-shadow: 0 15px 35px rgba(180, 0, 255, 0.25); border-color: rgba(180, 0, 255, 0.6);
         }
 
         .product-img-container {
-            width: 100%; height: 150px; border-radius: 12px; background: rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px; display: flex; justify-content: center; align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden;
+            width: 100%; height: 160px; border-radius: 12px; background: rgba(0, 0, 0, 0.6);
+            margin-bottom: 15px; display: flex; justify-content: center; align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
-        .placeholder-icon { font-size: 40px; color: rgba(255, 255, 255, 0.2); }
-        .product-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .placeholder-icon { font-size: 50px; color: rgba(180, 0, 255, 0.3); text-shadow: 0 0 15px rgba(180,0,255,0.2); }
 
-        .product-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        
-        /* وصف صغير للمنتج */
-        .product-desc { font-size: 12px; color: #aaa; margin-bottom: 10px; line-height: 1.4; height: 34px; overflow: hidden; }
+        .product-title { font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
+        .product-desc { font-size: 13px; color: #aaa; margin-bottom: 15px; line-height: 1.5; height: 38px; overflow: hidden; }
 
         .product-price {
-            font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900;
-            color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900;
+            color: #d866ff; text-shadow: 0 0 10px rgba(180, 0, 255, 0.5); margin-bottom: 20px;
         }
 
         .buy-now-btn {
-            display: block; width: 100%; padding: 12px; background: linear-gradient(90deg, #4a00e0, #8e2de2);
-            color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700;
-            cursor: pointer; text-decoration: none; transition: all 0.3s; box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
+            display: block; width: 100%; padding: 14px; 
+            background: linear-gradient(90deg, #5e00b3, #b400ff);
+            color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 900;
+            cursor: pointer; text-decoration: none; transition: all 0.3s; 
+            box-shadow: 0 0 15px rgba(180, 0, 255, 0.4); text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .buy-now-btn:hover { box-shadow: 0 0 20px #b400ff; transform: scale(1.02); }
+        .buy-now-btn:hover { 
+            box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.04); background: linear-gradient(90deg, #7a00e6, #c433ff);
+        }
 
-        /* شريط الثقة (الجديد) */
+        /* شريط الثقة */
         .trust-badges {
             display: flex; justify-content: center; gap: 20px; margin-top: 60px;
-            padding: 15px; background: rgba(255,255,255,0.02); border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap;
+            padding: 20px; background: rgba(180,0,255,0.03); border-radius: 15px;
+            border: 1px dashed rgba(180,0,255,0.2); flex-wrap: wrap; width: 100%;
         }
-        .trust-item { font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 5px; }
+        .trust-item { font-size: 14px; font-weight: 700; color: #d866ff; display: flex; align-items: center; gap: 5px; }
+
     </style>
 </head>
 <body>
@@ -134,17 +172,23 @@
     <div class="store-container">
         <div class="store-header">
             <div class="store-title">VORTX Store</div>
-            <a href="index.html" class="back-btn">⬅ عودة</a>
+            <a href="index.html" class="back-btn">⬅ عودة للرئيسية</a>
+        </div>
+
+        <div class="programs-nav">
+            <button class="prog-btn active" onclick="switchApp('ae-section', this)">💻 After Effects</button>
+            <button class="prog-btn" onclick="switchApp('am-section', this)">📱 Alight Motion</button>
         </div>
 
         <nav class="category-nav">
-            <a href="#shakes" class="cat-btn">Shakes</a>
-            <a href="#cc" class="cat-btn">CC</a>
-            <a href="#effects" class="cat-btn">Effects</a>
+            <div class="cat-btn" onclick="scrollToCat('cat-shakes')">Shakes</div>
+            <div class="cat-btn" onclick="scrollToCat('cat-cc')">CC</div>
+            <div class="cat-btn" onclick="scrollToCat('cat-effects')">Effects</div>
         </nav>
 
-        <div id="shakes">
-            <h2 class="section-title">✨ Shakes</h2>
+        <div id="ae-section" class="app-section active-app">
+            
+            <h2 class="section-title cat-shakes">✨ AE Shakes</h2>
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-img-container"><div class="placeholder-icon">📳</div></div>
@@ -153,11 +197,9 @@
                     <div class="product-price">5.00$</div>
                     <a href="#" class="buy-now-btn">شراء الآن</a>
                 </div>
-                </div>
-        </div>
+            </div>
 
-        <div id="cc">
-            <h2 class="section-title">🎨 Color Correction (CC)</h2>
+            <h2 class="section-title cat-cc">🎨 AE Color Correction</h2>
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-img-container"><div class="placeholder-icon">📦</div></div>
@@ -167,29 +209,90 @@
                     <a href="#" class="buy-now-btn">شراء الآن</a>
                 </div>
             </div>
-        </div>
 
-        <div id="effects">
-            <h2 class="section-title">⚡ Effects</h2>
+            <h2 class="section-title cat-effects">⚡ AE Effects</h2>
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-img-container"><div class="placeholder-icon">🎬</div></div>
-                    <div class="product-title">Glitch Transition</div>
-                    <div class="product-desc">انتقالات جليتش سريعة مع تأثيرات صوتية مدمجة.</div>
+                    <div class="product-title">Glitch Transitions</div>
+                    <div class="product-desc">انتقالات جليتش سريعة مع تأثيرات بصرية قوية.</div>
                     <div class="product-price">3.00$</div>
                     <a href="#" class="buy-now-btn">شراء الآن</a>
                 </div>
             </div>
         </div>
 
+        <div id="am-section" class="app-section">
+            
+            <h2 class="section-title cat-shakes">✨ AM Shakes</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-container"><div class="placeholder-icon">📱</div></div>
+                    <div class="product-title">Mobile Shakes Pack</div>
+                    <div class="product-desc">اهتزازات جاهزة بمشاريع XML للايت موشن.</div>
+                    <div class="product-price">3.00$</div>
+                    <a href="#" class="buy-now-btn">شراء الآن</a>
+                </div>
+            </div>
+
+            <h2 class="section-title cat-cc">🎨 AM Color Correction</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-container"><div class="placeholder-icon">📱</div></div>
+                    <div class="product-title">Mobile CC Project</div>
+                    <div class="product-desc">مشاريع ألوان جاهزة للاستيراد المباشر.</div>
+                    <div class="product-price">2.00$</div>
+                    <a href="#" class="buy-now-btn">شراء الآن</a>
+                </div>
+            </div>
+
+            <h2 class="section-title cat-effects">⚡ AM Effects</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-container"><div class="placeholder-icon">📱</div></div>
+                    <div class="product-title">Glow & Rays</div>
+                    <div class="product-desc">تأثيرات الإضاءة والوهج الاحترافية للايت موشن.</div>
+                    <div class="product-price">2.00$</div>
+                    <a href="#" class="buy-now-btn">شراء الآن</a>
+                </div>
+            </div>
+        </div>
+
         <div class="trust-badges">
-            <div class="trust-item">⚡ تسليم فوري للملفات</div>
+            <div class="trust-item">⚡ تسليم آلي فوري</div>
             <div class="trust-item">🔒 دفع آمن ومشفر</div>
-            <div class="trust-item">❌ المنتجات الرقمية لا تسترد</div>
+            <div class="trust-item">🛡️ ضمان الجودة</div>
         </div>
 
     </div>
 
+    <script>
+        // دالة التبديل بين برامج المونتاج
+        function switchApp(appId, btn) {
+            // إخفاء كل الأقسام
+            document.querySelectorAll('.app-section').forEach(el => el.classList.remove('active-app'));
+            // إظهار القسم المطلوب
+            document.getElementById(appId).classList.add('active-app');
+            
+            // تغيير شكل الزر الفعال
+            document.querySelectorAll('.prog-btn').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // رفع الصفحة لفوق شوي عشان يوضح القسم
+            window.scrollTo({top: 150, behavior: 'smooth'});
+        }
+
+        // دالة النزول للقسم المحدد داخل البرنامج المفتوح
+        function scrollToCat(catClass) {
+            const activeSection = document.querySelector('.app-section.active-app');
+            const target = activeSection.querySelector('.' + catClass);
+            if(target) {
+                // حساب المسافة بدقة مع الأخذ بالاعتبار الشريط الزجاجي اللاصق
+                const y = target.getBoundingClientRect().top + window.scrollY - 120;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        }
+    </script>
 </body>
 </html>
 
