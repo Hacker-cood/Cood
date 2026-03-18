@@ -242,7 +242,7 @@
         <div class="crystal-panel"><span class="crystal-text">Master Your Motion</span></div>
 
         <div class="links-wrapper">
-            <a href="#" class="link-btn store-btn">🛒 Online Store</a>
+            <a href="store.html" class="link-btn store-btn">🛒 Online Store</a>
             <a href="https://www.tiktok.com/@ortr.1?_r=1&_t=ZS-94WfLhF9TMt" target="_blank" class="link-btn"><img src="tik.png" alt="TikTok" class="btn-icon glow-tiktok"> TikTok</a>
             <a href="https://t.me/popo_jo" target="_blank" class="link-btn" id="telegram-btn"><img src="tly.png" alt="Telegram" class="btn-icon btn-icon-telegram glow-telegram"> Telegram</a>
             <a href="https://www.instagram.com/toix.8i?igsh=Z3B1eWdwNGJocW9q" target="_blank" class="link-btn"><img src="ins.png" alt="Instagram" class="btn-icon btn-icon-instagram glow-instagram"> Instagram</a>
@@ -307,22 +307,29 @@
         window.addEventListener('resize', () => { resizeRain(); resizeInnerCanvas(); });
         setTimeout(() => { resizeInnerCanvas(); animateInnerLines(); }, 100);
 
-        // --- 3. REAL Global Visitor Counter ---
+        // --- 3. REAL Global Visitor Counter (مع التعديل ضد موانع الإعلانات) ---
         const counterNamespace = "vortx_official_page"; 
         const counterKey = "total_visits";
+        const vCountElement = document.getElementById('vCount');
+
+        const savedCount = localStorage.getItem('vortx_last_count');
+        if (savedCount) {
+            vCountElement.innerText = savedCount;
+        } else {
+            vCountElement.innerText = "..."; 
+        }
 
         fetch(`https://api.counterapi.dev/v1/${counterNamespace}/${counterKey}/up`)
           .then(response => response.json())
           .then(data => {
-              // التعديل هنا: يقرأ الرقم، ولو علق السيرفر يحط نقطة خضراء
               if(data && data.count) {
-                  document.getElementById('vCount').innerText = data.count.toLocaleString();
-              } else {
-                  document.getElementById('vCount').innerText = "🟢";
+                  const finalNumber = data.count.toLocaleString();
+                  vCountElement.innerText = finalNumber;
+                  localStorage.setItem('vortx_last_count', finalNumber);
               }
           })
           .catch(error => {
-              document.getElementById('vCount').innerText = "🟢";
+              console.log("AdBlocker prevented fetching live count, showing cached number.");
           });
 
         const flash = document.getElementById('flash');
