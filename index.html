@@ -70,9 +70,8 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes float-rev { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(15px); } }
 
-        /* --- 3. Main Glass Container (تعديل اللون الغامق هنا) --- */
+        /* --- 3. Main Glass Container --- */
         .container {
-            /* رجعنا اللون للأسود/الكحلي الشفاف بدل الفاتح */
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(15, 0, 25, 0.4) 100%);
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(157, 0, 255, 0.2); border-radius: 30px; padding: 50px 30px;
@@ -234,9 +233,10 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 
+                // تعديل المطر: رجعناه للوضع الشفاف (clearRect)
                 const rainCanvas = document.getElementById('rainCanvas');
                 rainCanvas.style.opacity = "1";
-                const ctxRain = rainCanvas.getContext('2d', { alpha: false });
+                const ctxRain = rainCanvas.getContext('2d', { alpha: true });
                 function resizeRain() { rainCanvas.width = window.innerWidth; rainCanvas.height = window.innerHeight; }
                 resizeRain();
                 const rainParticles = [];
@@ -244,8 +244,7 @@
                     rainParticles.push({ x: Math.random() * rainCanvas.width, y: Math.random() * rainCanvas.height, size: Math.random() * 2, speedY: Math.random() * 0.4 + 0.1, opacity: Math.random() * 0.5 + 0.1 });
                 }
                 function animateRain() {
-                    ctxRain.fillStyle = '#0b0c10'; 
-                    ctxRain.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+                    ctxRain.clearRect(0, 0, rainCanvas.width, rainCanvas.height); // هنا التعديل اللي رجع الخلفية
                     rainParticles.forEach(p => {
                         ctxRain.fillStyle = `rgba(157, 0, 255, ${p.opacity})`; ctxRain.beginPath(); ctxRain.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctxRain.fill();
                         p.y += p.speedY; if (p.y > rainCanvas.height) { p.y = 0; p.x = Math.random() * rainCanvas.width; }
