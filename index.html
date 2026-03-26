@@ -43,7 +43,7 @@
             position: fixed; top: 0; left: 0;
             width: 100vw; height: 100vh;
             z-index: 1; pointer-events: none;
-            opacity: 0; transition: opacity 1s ease-in; /* ظهور سلس للمطر */
+            opacity: 0; transition: opacity 1s ease-in; 
         }
 
         .lightning {
@@ -70,14 +70,15 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes float-rev { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(15px); } }
 
-        /* --- 3. Main Glass Container --- */
+        /* --- 3. Main Glass Container (تعديل اللون الغامق هنا) --- */
         .container {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(15, 5, 25, 0.2) 100%);
-            backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 50px 30px;
+            /* رجعنا اللون للأسود/الكحلي الشفاف بدل الفاتح */
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(15, 0, 25, 0.4) 100%);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(157, 0, 255, 0.2); border-radius: 30px; padding: 50px 30px;
             width: 100%; max-width: 440px; text-align: center;
             position: relative; z-index: 100;
-            box-shadow: 0 0 40px rgba(157, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(157, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.02);
             overflow: hidden; margin: 0 auto; 
             opacity: 0; transform: scale(0.95);
             will-change: transform, opacity;
@@ -100,7 +101,6 @@
             100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        /* تقليل أوقات التأخير لسرعة الظهور */
         .logo-container { animation-delay: 0.1s; }
         .title-container { animation-delay: 0.2s; }
         .crystal-panel { animation-delay: 0.3s; }
@@ -229,25 +229,22 @@
     </div>
 
     <script>
-        // --- Anti-Theft Security ---
         document.addEventListener('contextmenu', event => event.preventDefault()); 
 
-        // السحر هنا: نأجل تشغيل الجرافيكس الثقيل لين تطلع الواجهة للزبون
         window.addEventListener('load', () => {
             setTimeout(() => {
                 
-                // 1. تشغيل المطر
                 const rainCanvas = document.getElementById('rainCanvas');
                 rainCanvas.style.opacity = "1";
                 const ctxRain = rainCanvas.getContext('2d', { alpha: false });
                 function resizeRain() { rainCanvas.width = window.innerWidth; rainCanvas.height = window.innerHeight; }
                 resizeRain();
                 const rainParticles = [];
-                for (let i = 0; i < 40; i++) { // خففنا العدد لـ 40 عشان السرعة
+                for (let i = 0; i < 40; i++) { 
                     rainParticles.push({ x: Math.random() * rainCanvas.width, y: Math.random() * rainCanvas.height, size: Math.random() * 2, speedY: Math.random() * 0.4 + 0.1, opacity: Math.random() * 0.5 + 0.1 });
                 }
                 function animateRain() {
-                    ctxRain.fillStyle = '#0b0c10'; // مسح الخلفية بلون سادة أسرع من الـ clearRect
+                    ctxRain.fillStyle = '#0b0c10'; 
                     ctxRain.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
                     rainParticles.forEach(p => {
                         ctxRain.fillStyle = `rgba(157, 0, 255, ${p.opacity})`; ctxRain.beginPath(); ctxRain.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctxRain.fill();
@@ -255,7 +252,6 @@
                     }); requestAnimationFrame(animateRain);
                 } animateRain();
 
-                // 2. تشغيل الخطوط المتصادمة
                 const innerCanvas = document.getElementById('innerBouncingCanvas');
                 innerCanvas.style.opacity = "1";
                 const ctxInner = innerCanvas.getContext('2d');
@@ -282,7 +278,6 @@
                 } animateInnerLines();
                 window.addEventListener('resize', () => { resizeRain(); resizeInnerCanvas(); });
 
-                // 3. تشغيل العداد الذكي
                 const counterNamespace = "vortx_official_page"; 
                 const counterKey = "total_visits";
                 const vCountElement = document.getElementById('vCount');
@@ -299,7 +294,6 @@
                       }
                   }).catch(error => { console.log("Cached count shown."); });
 
-                // 4. إظهار الروبوت وتفعيل حركته
                 const robot = document.getElementById('cyber-robot');
                 robot.style.opacity = '1';
                 const robotMesh = document.querySelector('.robot-mesh');
@@ -355,10 +349,9 @@
                     }
                 });
 
-            }, 300); // تأخير الجرافيكس 300 ملي ثانية عشان تفتح الصفحة بلمح البصر
+            }, 300); 
         });
 
-        // حركة الماوس للشاشة كاملة
         document.addEventListener("mousemove", e => {
             const x = (window.innerWidth / 2 - e.clientX) / 80; const y = (window.innerHeight / 2 - e.clientY) / 80;
             document.body.style.transform = `translate(${x}px, ${y}px) translateZ(0)`;
